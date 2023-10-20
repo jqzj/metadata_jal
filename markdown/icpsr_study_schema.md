@@ -1,6 +1,6 @@
 # ICPSR Curated Study Metadata Schema
 
-Last updated: October 18, 2023
+Last updated: October 20, 2023
 
 This is the metadata schema for curated studies at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry and (b) inform ICPSR depositors of necessary information to improve the discoverability of their data collections.
 
@@ -1156,6 +1156,8 @@ The textual description should not simply restate the time period in words. For 
 
 **Usage Notes:** Age, nationality, and residence commonly help to delineate a given universe, but any of a number of factors may be involved, such as sex, race, income, veteran status, criminal convictions, etc. The Universe may consist of elements other than persons, such as housing units, court cases, deaths, countries, etc. It should be possible to tell from the description of the universe whether a given individual or element (hypothetical or real) is a member of the population under study. Typically, the Universe statement is about one sentence or shorter, and reflects the entire possible population a data collection sought to study.
 
+**ICPSR Input Guidance:** Universe is distinct from Sampling as it describes the population the study seeks to analyze, while Sampling describes how the researchers selected participants among that population. Universe should not contain information about methodology, only general information about the target population.
+
 **Examples:** 
 
 ```json
@@ -1357,6 +1359,8 @@ The textual description should not simply restate the time period in words. For 
 **Controlled Vocabulary:** N/A
 
 **Usage Notes:** The sample is a selection out of the universe of all possible relevant cases (e.g., adults in the United States, housing units in three counties of Michigan, etc.) that could have been included in the data collection. A detailed discussion of such things as sampling error or other limitations of the sampling methodology is not required here. Note that some studies, such as censuses, do not utilize samples but include all members of the universe. In such cases, 'inap.' may be entered in Sampling to indicate it was not omitted in error.
+
+**ICPSR Input Guidance:** Sampling is distinct from Universe as it describes the methods the researcher used to select or recruit participants among the target population, while Universe describes the whole population the researchers sought to analyze. If no information about Sampling methodology is available, it is not appropriate to simply restate the Universe.
 
 **Examples:** 
 
