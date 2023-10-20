@@ -1,4 +1,4 @@
-site_name: ICPSR Metadata Documentation Portal
+site_name: Metadata Documentation Portal
 site_url: https://icpsr.github.io/metadata/
 docs_dir: ../markdown
 site_dir: ../site

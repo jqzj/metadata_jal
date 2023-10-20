@@ -94,6 +94,7 @@
         {%- endif %}
         {%- if config.theme.logo %}
           <img src="{{ config.theme.logo|url }}" class="logo" alt="{% trans %}ICPSR Logo{% endtrans %}"/>
+          {{ config.site_name }}
         {%- endif %}
         </a>
       {%- endblock %}
@@ -171,9 +172,6 @@
     <script>var base_url = {{ base_url|tojson }};</script>
     <script src="{{ 'js/theme_extra.js'|url }}"></script>
     <script src="{{ 'js/theme.js'|url }}"></script>
-    {%- for script in config.extra_javascript %}
-      {{ script|script_tag }}
-    {%- endfor %}
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable({{ 'true' if config.theme.sticky_navigation else 'false' }});
