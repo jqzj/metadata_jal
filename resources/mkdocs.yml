@@ -14,5 +14,6 @@ theme:
   logo: ./assets/ICPSR_logo_rgb_white-01.png
   navigation_depth: 5
   sticky_navigation: true
+  include_homepage_in_sidebar: false
 extra_css: 
   - ./assets/style.css
