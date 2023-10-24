@@ -1,6 +1,6 @@
 # ICPSR Metadata 
 
-This repository includes the ICPSR  schema and associated documentation.
+This repository includes information about metadata practices at the [Inter-university Consortium for Political and Social Research](https://www.icpsr.umich.edu/web/pages/) (ICPSR). 
 
 ## Quick links:
 
