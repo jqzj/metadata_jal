@@ -1,4 +1,4 @@
-# ICPSR  Schema
+# ICPSR Metadata Schema
 
 Last updated: October 24, 2023
 
