@@ -4,7 +4,7 @@ docs_dir: ../markdown
 site_dir: ../site
 nav:
   - Home: index.md
-  - ICPSR  Schema: icpsr_study_schema.md
+  - ICPSR Metadata Schema: icpsr_study_schema.md
   - ICPSR Metadata Style Guide: icpsr_style_guide.md
   - Documentation Portal Version History: version_history.md
 theme:

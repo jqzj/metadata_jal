@@ -15,7 +15,7 @@ If new content will be added to the ICPSR Metadata Documentation Portal:
 - Edit the [JSON Schema or YAML files](/schema) (if making changes to the metadata schema itself) or edit/create markdown files in the [Markdown](/markdown) folder (if making changes to other metadata documentation). [1]
 - If new markdown pages have been added, they must be included in the "nav" section of the [mkdocs.yaml](/resources/mkdocs.yaml) configuration file so that they will appear in the documentation portal's navigation. Each "nav" entry must include a page title and the path to the markdown file (relative to the Markdown folder), as illustrated below:  
   ![ICPSR mkdocs.yaml file](/resources/images/mkdocs_yaml.png) [2]  
- - Commit your changes and push to the remote repository. If the JSON Schema or any YAML file has been modified, this will trigger an automated GitHub Actions [workflow](/.github/workflows/update_md.yaml) that will generate a new markdown copy of the ICPSR  Schema.
+ - Commit your changes and push to the remote repository. If the JSON Schema or any YAML file has been modified, this will trigger an automated GitHub Actions [workflow](/.github/workflows/update_md.yaml) that will generate a new markdown copy of the ICPSR Metadata Schema.
  - When all edits are complete, submit a pull request and assign it to a repository member with the appropriate permissions.
  - Once the pull request is confirmed, an automated GitHub Actions [workflow](/.github/workflows/update_html.yaml) will be triggered, which:
    - Produces a new HTML version of the ICPSR Metadata Documentation Portal
