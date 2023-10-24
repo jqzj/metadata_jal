@@ -1,4 +1,4 @@
-# ICPSR Curated Study Metadata Schema
+# ICPSR  Schema
 
 Last updated: October 20, 2023
 
