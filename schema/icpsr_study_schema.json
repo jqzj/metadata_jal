@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.icpsr.umich.edu/schema/icpsr_study_schema?version=v1",
-  "title": "ICPSR Curated Study Metadata Schema",
-  "description": "This is the metadata schema for curated studies at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry and (b) inform ICPSR depositors of necessary information to improve the discoverability of their data collections.",
+  "title": "ICPSR  Schema",
+  "description": "This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry and (b) inform ICPSR depositors of necessary information that will improve the discoverability of their data.",
   "type": "object",
   "required": [ "title", "principal_investigator", "version", "version_date", "distributor", "summary", "subject_term", "time_period", "geographic_coverage_area" ],
   "additionalProperties": false,
