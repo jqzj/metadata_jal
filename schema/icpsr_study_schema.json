@@ -835,7 +835,8 @@
           "sda_note": {
             "description": "Additional information about the fileset for the purpose of helping online analysis users.",
             "type": "string",
-            "controlledVocab": "N/A"
+            "controlledVocab": "N/A",
+            "examples": []
           }
         },
         "required": ["number"],

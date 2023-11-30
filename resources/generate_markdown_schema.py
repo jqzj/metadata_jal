@@ -107,7 +107,7 @@ def persist_cache(cache, temp_dir):
 
 def clean_label(label):
 
-    return label.replace('_', ' ').title().replace("To", "to").replace("Of", "of").replace("Id", "ID").replace("Doi", "Digital Object Identifier (DOI)").replace("IDentifier", "Identifier").replace("Sda ", "SDA ")
+    return label.replace('_', ' ').title().replace("To", "to").replace("Of", "of").replace("Id", "ID").replace("Doi", "Digital Object Identifier (DOI)").replace("IDentifier", "Identifier").replace("Sda ", "SDA ").replace(" Url", " URL")
 
 def check_write(line, fo, processed_lines, index="foo"):
     if isinstance(index, int):
@@ -388,11 +388,11 @@ def main():
                     check_write('For a machine-actionable copy of this information, please see the [JSON Schema version](https://github.com/ICPSR/metadata/blob/main/schema/icpsr_study_schema.json).\n\n## Metadata Elements: Overview\n\n', fo, processed_lines)
 
                 #check to see if this is the second 'example' in a given section--if so, change the heading so that it's clear this is a full example with all subfields 
-                elif line.startswith('**Examples:**'):
+                elif line.startswith('**Example'):
                     #Add one to our example count
                     example_count += 1
                     #if our count is now at 2 it means we have consecutive 'Example' sections under one heading. Adjust the label. If count is at one, just write the line to file-out.
-                    if example_count == 2:
+                    if example_count > 1:
                         processed_lines = check_write(f'###### Complete {current_element} Examples (with Subfields):', fo, processed_lines, index)
                     else:
                         processed_lines = check_write(line, fo, processed_lines, index)
