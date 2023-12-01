@@ -2011,9 +2011,18 @@ This element is only meant to convey specific, known, geography. If there is a v
     {
         "number": 2,
         "name": "Northbound Restricted-Use Data"
-    },
+    }
+]
+```
+
+```json
+[
     {
         "number": 1,
+        "name": "Original File"
+    },
+    {
+        "number": 2,
         "name": "Replicate Weight File",
         "sda_note": "Please note that the replicate weights are needed to obtain accurate standard error estimates. Users are advised to download the data to use the replicate weights. Users should refer to the study description page or User Guide for further details regarding weights."
     }
