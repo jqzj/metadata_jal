@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: November 30, 2023
+Last updated: December 01, 2023
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -1986,6 +1986,15 @@ This element is only meant to convey specific, known, geography. If there is a v
 **Examples:** 
 
 ```json
+"Please note that the AABS provides estimates for 32 states. It also supplies arts participation estimates for 11 metropolitan areas. Users are encouraged to review the Data Collection Notes on the Study Description page for specific states and metropolitan areas."
+```
+
+```json
+"Please note that the replicate weights are needed to obtain accurate standard error estimates. Users are advised to download the data to use the replicate weights. Users should refer to the study description page or User Guide for further details regarding weights."
+```
+
+###### Complete Filesets Examples (with Subfields):
+```json
 [
     {
         "number": 1
@@ -2002,6 +2011,11 @@ This element is only meant to convey specific, known, geography. If there is a v
     {
         "number": 2,
         "name": "Northbound Restricted-Use Data"
+    },
+    {
+        "number": 1,
+        "name": "Replicate Weight File",
+        "sda_note": "Please note that the replicate weights are needed to obtain accurate standard error estimates. Users are advised to download the data to use the replicate weights. Users should refer to the study description page or User Guide for further details regarding weights."
     }
 ]
 ```
