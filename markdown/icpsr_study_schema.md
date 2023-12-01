@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: October 27, 2023
+Last updated: November 30, 2023
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -16,7 +16,7 @@ For a machine-actionable copy of this information, please see the [JSON Schema v
 | [Title](#title )                                       | Yes       | No          | Text                      | The authoritative title of the data collection. A full title should include a descriptive string that captures what the data collection contains as well as the geographic scope of and the time period covered by the data collection.                                                                                                                                        |
 | [Alternate Title](#alternate_title )                   | No        | Yes         | Text                      | Alternate name(s) or acronym(s) commonly used to refer to the data collection.                                                                                                                                                                                                                                                                                                 |
 | [Link Title](#link_title )                             | No        | No          | Text                      | The title of the item being linked to. Restricted to ICPSR 'union catalog' records – i.e., external resources to which ICPSR links as a courtesy.                                                                                                                                                                                                                              |
-| [Link Url](#link_url )                                 | No        | No          | Text                      | The URL of the item being linked to. Restricted to ICPSR 'union catalog' records – i.e., external resources to which ICPSR links as a courtesy.                                                                                                                                                                                                                                |
+| [Link URL](#link_url )                                 | No        | No          | Text                      | The URL of the item being linked to. Restricted to ICPSR 'union catalog' records – i.e., external resources to which ICPSR links as a courtesy.                                                                                                                                                                                                                                |
 | [Principal Investigator](#principal_investigator )     | Yes       | Yes         | Multi-part; see subfields           | The entity or entities responsible for the data collection, presented in order of importance. A Principal Investigator (PI) may be a person or an organization. Each data collection requires at least one PI.                                                                                                                                                                 |
 | [Citation](#citation )                                 | No        | No          | Text                      | The established bibliographic reference for the data collection.                                                                                                                                                                                                                                                                                                               |
 | [Distributor](#distributor )                           | Yes       | Yes         | Multi-part; see subfields           | The organization(s) responsible for distributing the data collection. Values include both the name and the location of the Distributor(s).                                                                                                                                                                                                                                     |
@@ -271,7 +271,7 @@ Time Period:
 "Cebu Longitudinal Health and Nutrition Survey"
 ```
 
-### <a name="link_url"></a>7. Link Url         
+### <a name="link_url"></a>7. Link URL         
 
 **Description:** The URL of the item being linked to. Restricted to ICPSR 'union catalog' records – i.e., external resources to which ICPSR links as a courtesy.
 
@@ -1809,8 +1809,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 "The codebook descriptions of variables TANSUP, EMOSUP, and SOCSUP were corrected."
 ```
 
-**Example:** 
-
+###### Complete Changes to Collection Examples (with Subfields):
 ```json
 [
     {
