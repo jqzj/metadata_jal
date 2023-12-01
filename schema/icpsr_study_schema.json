@@ -836,7 +836,10 @@
             "description": "Additional information about the fileset for the purpose of helping online analysis users.",
             "type": "string",
             "controlledVocab": "N/A",
-            "examples": []
+            "examples": [
+              "Please note that the AABS provides estimates for 32 states. It also supplies arts participation estimates for 11 metropolitan areas. Users are encouraged to review the Data Collection Notes on the Study Description page for specific states and metropolitan areas.",
+              "Please note that the replicate weights are needed to obtain accurate standard error estimates. Users are advised to download the data to use the replicate weights. Users should refer to the study description page or User Guide for further details regarding weights."
+            ]
           }
         },
         "required": ["number"],
@@ -858,6 +861,11 @@
           {
             "number": 2,
             "name": "Northbound Restricted-Use Data"
+          },
+          {
+            "number": 1,
+            "name": "Replicate Weight File",
+            "sda_note": "Please note that the replicate weights are needed to obtain accurate standard error estimates. Users are advised to download the data to use the replicate weights. Users should refer to the study description page or User Guide for further details regarding weights."
           }
         ]
       ]
