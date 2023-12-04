@@ -725,7 +725,6 @@
       "description": "The smallest geographic unit used in the dataset.",
       "type": "string",
       "controlledVocab": "N/A",
-      "icpsrGuidance": "For National Institute of Justice (NIJ) studies, enter 'None' if no geographic variables are present. For all other archives, this element is optional.",
       "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/smallest_geographic_unit?version=v1",
       "examples": [
         "state",
