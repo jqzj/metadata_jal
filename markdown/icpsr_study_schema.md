@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: December 01, 2023
+Last updated: December 04, 2023
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -1702,9 +1702,11 @@ The textual description should not simply restate the time period in words. For 
 
 If the data do not include a geographic variable by which the data can be analyzed, this element is not indicated. If all the cases are from a single state, but the cases are not subdivided geographically within that state, then 'state' is not indicated.  
 
-This element is only meant to convey specific, known, geography. If there is a variable indicating which testing site a survey was taken at, but the locations of the testing sites were masked by the PI, this element is likely not indicated.
+This element is only meant to convey specific, known, geography. If there is a variable indicating which testing site a survey was taken at, but the locations of the testing sites were masked by the PI, this element is likely not indicated.  
 
 **ICPSR Input Guidance:** For National Institute of Justice (NIJ) studies, enter 'None' if no geographic variables are present. For all other archives, this element is optional.
+
+The following is a non-exhaustive list of potential entries: Area code, Administrative region, Block, Census Block, Census Block group, Census division, Census enumeration area, Census region, Census tract, City, Congressional district, Consolidated Metropolitan Statistical Area (CMSA), Continent, Core-based statistical area, Country, County, District, Ecological zone, Electoral district, Electoral ward, Enumeration area, Federal court district, FIPS code, Geo-political unit (GPU), Geocoded street location, Grid coordinates, Metropolitan Statistical Area (MSA), Municipality, Neighborhood, Neighborhood cluster, Police district, Police jurisdiction, Police patrol/beat, Police precinct, Police sector, Postal code, Prefecture, Primary Metropolitan Statistical Area (PMSA), Primary Sampling Units (PSUs), Province, Public use microdata area (PUMA), School district, State, State legislative district, Street address, Territory, Town, Township, Traffic analysis zone (TAZ), United Kingdom Standard Statistical Regions (SSR), University campus, Village, Voting Precinct, Ward, Watershed, ZIP Code.
 
 **Examples:** 
 
