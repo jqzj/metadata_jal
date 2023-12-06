@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: December 04, 2023
+Last updated: December 06, 2023
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -178,6 +178,8 @@ Geography:
   * Descriptors that do not have a distinct geographic area, such as 'communities' or 'regions', are not included in titles.   
 
   * 'Global' may be appropriate for studies where the universe of participants is truly worldwide. Possible examples include online surveys that are not restricted by geography, or studies of organizations, such as NGOs.   
+
+  * Brackets are typically not indicated. They are indicated when a study has National, Federal, Congressional, or American in the title. Brackets can be indicated if a non-United States study has “National” in the title, or a similar word specific to that country.  
 
 Time Period:  
 
