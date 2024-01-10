@@ -6,7 +6,7 @@
 
     | *Term* | *Definition* |
     |----------|---------------|
-    | Checked for undocumented or out-of-date codes | Selected if the ICPSR curator checked at least half of the variables in the data collection for wild codes and corrected or reported in the codebook any wild codes discovered by these checks. |
+    | Checked for undocumented or out-of-range codes | Selected if the ICPSR curator checked at least half of the variables in the data collection for wild codes and corrected or reported in the codebook any wild codes discovered by these checks. |
     | Created online analysis version with question text | Selected if the ICPSR curator created online analysis version with question text. |
     | Created variable labels and/or value labels | Selected if the ICPSR curator created variable labels and/or value labels. |
     | Performed consistency checks | Selected if the ICPSR curator performed any of the following consistency checks on at least half of the variables in the data collection and corrected or reported in the codebook any inconsistencies discovered by these checks:<br> &nbsp; &nbsp;- Checked to see that skip patterns in questionnaires were followed correctly.  <br> &nbsp; &nbsp;- Checked the logical consistency of response patterns across variables. |
