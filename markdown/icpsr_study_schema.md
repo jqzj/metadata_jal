@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: December 06, 2023
+Last updated: January 10, 2024
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -1537,7 +1537,7 @@ The textual description should not simply restate the time period in words. For 
 
 | *Term* | *Definition* |
 |----------|---------------|
-| Checked for undocumented or out-of-date codes | Selected if the ICPSR curator checked at least half of the variables in the data collection for wild codes and corrected or reported in the codebook any wild codes discovered by these checks. |
+| Checked for undocumented or out-of-range codes | Selected if the ICPSR curator checked at least half of the variables in the data collection for wild codes and corrected or reported in the codebook any wild codes discovered by these checks. |
 | Created online analysis version with question text | Selected if the ICPSR curator created online analysis version with question text. |
 | Created variable labels and/or value labels | Selected if the ICPSR curator created variable labels and/or value labels. |
 | Performed consistency checks | Selected if the ICPSR curator performed any of the following consistency checks on at least half of the variables in the data collection and corrected or reported in the codebook any inconsistencies discovered by these checks:<br> &nbsp; &nbsp;- Checked to see that skip patterns in questionnaires were followed correctly.  <br> &nbsp; &nbsp;- Checked the logical consistency of response patterns across variables. |
