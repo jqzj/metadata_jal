@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: January 10, 2024
+Last updated: January 24, 2024
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -1708,7 +1708,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 
 **ICPSR Input Guidance:** For National Institute of Justice (NIJ) studies, enter 'None' if no geographic variables are present. For all other archives, this element is optional.
 
-The following is a non-exhaustive list of potential entries: Area code, Administrative region, Block, Census Block, Census Block group, Census division, Census enumeration area, Census region, Census tract, City, Congressional district, Consolidated Metropolitan Statistical Area (CMSA), Continent, Core-based statistical area, Country, County, District, Ecological zone, Electoral district, Electoral ward, Enumeration area, Federal court district, FIPS code, Geo-political unit (GPU), Geocoded street location, Grid coordinates, Metropolitan Statistical Area (MSA), Municipality, Neighborhood, Neighborhood cluster, Police district, Police jurisdiction, Police patrol/beat, Police precinct, Police sector, Postal code, Prefecture, Primary Metropolitan Statistical Area (PMSA), Primary Sampling Units (PSUs), Province, Public use microdata area (PUMA), School district, State, State legislative district, Street address, Territory, Town, Township, Traffic analysis zone (TAZ), United Kingdom Standard Statistical Regions (SSR), University campus, Village, Voting Precinct, Ward, Watershed, ZIP Code.
+The following is a non-exhaustive list of potential entries: census tract, city, congressional district, Core-Based Statistical Area (CBSA), country, county, Federal Court District, FIPS code, jurisdiction, neighborhood, school district, state, ZIP code.
 
 **Examples:** 
 
