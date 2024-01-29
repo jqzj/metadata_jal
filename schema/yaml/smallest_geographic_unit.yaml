@@ -8,6 +8,4 @@
 
     This element is only meant to convey specific, known, geography. If there is a variable indicating which testing site a survey was taken at, but the locations of the testing sites were masked by the PI, this element is likely not indicated.
   icpsrGuidance: |
-    For National Institute of Justice (NIJ) studies, enter 'None' if no geographic variables are present. For all other archives, this element is optional.
-
     The following is a non-exhaustive list of potential entries: census tract, city, congressional district, Core-Based Statistical Area (CBSA), country, county, Federal Court District, FIPS code, jurisdiction, neighborhood, school district, state, ZIP code.

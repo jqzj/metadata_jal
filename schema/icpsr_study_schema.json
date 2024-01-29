@@ -677,7 +677,6 @@
       "type": "string",
       "controlledVocab": "N/A",
       "usageNotes": "Weight includes any information about weighting variables in the data, as well as any other weight information provided by the Principal Investigator. If a weighting formula or coefficient was developed, provide this formula, define its elements, and indicate how the formula is applied to the data. It is acceptable to summarize information contained in documentation and refer users to that documentation for more information.",
-      "icpsrGuidance": "For National Institute of Justice (NIJ) studies, 'Not applicable.' should be used if no information is available. For all other archives, this element is optional.",
       "examples": [
         "A weight variable with two implied decimal places has been included and must be used in any analysis.",
         "Both the TransPop and Cisgender datasets have the same variable named WEIGHT as the weighting variable. The combination datasets have a set of three weight variables (WEIGHT_TRANSPOP, WEIGHT_CISGENDER, WEIGHT_CISGENDER_TRANSPOP). The results will be representative of the sample when the weight is applied. Pages 41 and 42 of the user guide contain instructions that detail how to apply the final sample weight using Stata or SPSS.",
@@ -689,7 +688,6 @@
       "type": "string",
       "controlledVocab": "N/A",
       "usageNotes": "Only applicable if the data were collected with a survey instrument and the response rates are provided.",
-      "icpsrGuidance": "For National Institute of Justice (NIJ) studies, the phrase 'Not available' is used when no information is available and the phrase 'Not applicable' is used if Response Rates does not apply. For all other archives this element is optional.",
       "examples": [
         "The overall response rate for this survey was 20.22%; 72.6% for existing panelists and 10.4% for new panelists, using AAPOR Response Rate 1.",
         "The response rate for the pre-election interview was 55.8 percent (66.5 percent for the Panel and 35.2 percent for the Fresh Cross). The response rate for the post-election interview was 89.1 (90.1 percent for the Panel and 85.2 percent for the Fresh Cross).",
@@ -700,7 +698,6 @@
       "description": "Any commonly known scale used to collect data for the data collection (e.g., psychological scales such as MMPI and CPI, or occupational scales such as the Census Occupational Codes).",
       "type": "string",
       "controlledVocab": "N/A",
-      "icpsrGuidance": "For National Institute of Justice (NIJ) studies, if there is no indication that scales are used, enter 'None' in this element. For all other archives, this element is optional.",
       "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/scale?version=v1",
       "examples": [
         ["The baseline data collection included one scale - the CES-D index for maternal depression [Cole, J. C., Rabin, A. S., Smith, T. L., and Kaufman, A. S. (2004). Development and validation of a Rasch-derived CES-D short form. Psychological assessment, 16(4), 360]. All scales used for outcomes at ages 1 through 3 are listed in Appendix Tables 1 and 2 in the User Guide. Please refer to the User Guide and P.I. Codebook, available under the 'Data and Documentation' tab, for details."],

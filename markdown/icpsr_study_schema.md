@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: January 24, 2024
+Last updated: January 29, 2024
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -1576,8 +1576,6 @@ The textual description should not simply restate the time period in words. For 
 
 **Usage Notes:** Weight includes any information about weighting variables in the data, as well as any other weight information provided by the Principal Investigator. If a weighting formula or coefficient was developed, provide this formula, define its elements, and indicate how the formula is applied to the data. It is acceptable to summarize information contained in documentation and refer users to that documentation for more information.
 
-**ICPSR Input Guidance:** For National Institute of Justice (NIJ) studies, 'Not applicable.' should be used if no information is available. For all other archives, this element is optional.
-
 **Examples:** 
 
 ```json
@@ -1606,8 +1604,6 @@ The textual description should not simply restate the time period in words. For 
 
 **Usage Notes:** Only applicable if the data were collected with a survey instrument and the response rates are provided.
 
-**ICPSR Input Guidance:** For National Institute of Justice (NIJ) studies, the phrase 'Not available' is used when no information is available and the phrase 'Not applicable' is used if Response Rates does not apply. For all other archives this element is optional.
-
 **Examples:** 
 
 ```json
@@ -1635,8 +1631,6 @@ The textual description should not simply restate the time period in words. For 
 **Controlled Vocabulary:** N/A
 
 **Usage Notes:** The inclusion of a common scale should be identified in the documentation associated with this dataset and confirmed by variable names or labels. The scales can be cited either as a list or described in full sentences. If the questionnaire used has a finite list of responses (e.g., 'Always, Sometimes, Rarely, Never' or Strongly Agree, Agree, Disagree, Strongly Disagree'), it is acceptable for this element to note 'A Likert-type scale was used,' or 'Several Likert-type scales were used.' However, it is not required to note Likart-type scales in situations where only such scales were used, given their ubiquity.  
-
-**ICPSR Input Guidance:** For National Institute of Justice (NIJ) studies, if there is no indication that scales are used, enter 'None' in this element. For all other archives, this element is optional.
 
 **Examples:** 
 
@@ -1706,9 +1700,7 @@ If the data do not include a geographic variable by which the data can be analyz
 
 This element is only meant to convey specific, known, geography. If there is a variable indicating which testing site a survey was taken at, but the locations of the testing sites were masked by the PI, this element is likely not indicated.  
 
-**ICPSR Input Guidance:** For National Institute of Justice (NIJ) studies, enter 'None' if no geographic variables are present. For all other archives, this element is optional.
-
-The following is a non-exhaustive list of potential entries: census tract, city, congressional district, Core-Based Statistical Area (CBSA), country, county, Federal Court District, FIPS code, jurisdiction, neighborhood, school district, state, ZIP code.
+**ICPSR Input Guidance:** The following is a non-exhaustive list of potential entries: census tract, city, congressional district, Core-Based Statistical Area (CBSA), country, county, Federal Court District, FIPS code, jurisdiction, neighborhood, school district, state, ZIP code.
 
 **Examples:** 
 
