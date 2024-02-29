@@ -9,6 +9,8 @@ nav:
   - Documentation Portal Version History: version_history.md
 theme:
   name: readthedocs
+  analytics:
+    gtag: G-PNP7RD0R04
   custom_dir: custom_theme/
   prev_next_buttons_location: none
   logo: ./assets/ICPSR_logo_rgb_white-01.png
