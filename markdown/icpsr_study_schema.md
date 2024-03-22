@@ -20,7 +20,7 @@ For a machine-actionable copy of this information, please see the [JSON Schema v
 | [Principal Investigator](#principal_investigator )     | Yes       | Yes         | Multi-part; see subfields           | The entity or entities responsible for the data collection, presented in order of importance. A Principal Investigator (PI) may be a person or an organization. Each data collection requires at least one PI.                                                                                                                                                                 |
 | [Citation](#citation )                                 | No        | No          | Text                      | The established bibliographic reference for the data collection.                                                                                                                                                                                                                                                                                                               |
 | [Distributor](#distributor )                           | Yes       | Yes         | Multi-part; see subfields           | The organization(s) responsible for distributing the data collection. Values include both the name and the location of the Distributor(s).                                                                                                                                                                                                                                     |
-| [Study Number](#study_number )                         | Yes       | No          | Text                      | A unique, numerical value used by ICPSR to identify and track data collections.                                                                                                                                                                                                                                                                                                |
+| [Study Number](#study_number )                         | Yes       | No          | Number                    | A unique, numerical value used by ICPSR to identify and track data collections.                                                                                                                                                                                                                                                                                                |
 | [Digital Object Identifier (DOI)](#doi )                                           | No        | No          | Text                      | The registered persistent digital object identifier (DOI) associated with the data collection.                                                                                                                                                                                                                                                                                 |
 | [Funding Source](#funding_source )                     | No        | Yes         | Multi-part; see subfields           | Information about funding that supported the data collection.                                                                                                                                                                                                                                                                                                                  |
 | [External Source ID](#external_source_ID )             | No        | Yes         | Text                      | A unique identifier supplied by the depositor.                                                                                                                                                                                                                                                                                                                                 |
@@ -627,7 +627,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 
 **Repeatable**: No
 
-**Accepted Values**: Text
+**Accepted Values**: Number
 
 **Controlled Vocabulary:** N/A
 
@@ -636,15 +636,15 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 **Examples:** 
 
 ```json
-"2760"
+2760
 ```
 
 ```json
-"3025"
+3025
 ```
 
 ```json
-"38672"
+38672
 ```
 
 ### <a name="doi"></a>12. Digital Object Identifier (DOI)         
