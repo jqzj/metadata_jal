@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: January 29, 2024
+Last updated: March 22, 2024
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -20,6 +20,7 @@ For a machine-actionable copy of this information, please see the [JSON Schema v
 | [Principal Investigator](#principal_investigator )     | Yes       | Yes         | Multi-part; see subfields           | The entity or entities responsible for the data collection, presented in order of importance. A Principal Investigator (PI) may be a person or an organization. Each data collection requires at least one PI.                                                                                                                                                                 |
 | [Citation](#citation )                                 | No        | No          | Text                      | The established bibliographic reference for the data collection.                                                                                                                                                                                                                                                                                                               |
 | [Distributor](#distributor )                           | Yes       | Yes         | Multi-part; see subfields           | The organization(s) responsible for distributing the data collection. Values include both the name and the location of the Distributor(s).                                                                                                                                                                                                                                     |
+| [Study Number](#study_number )                         | Yes       | No          | Number                    | A unique, numerical value used by ICPSR to identify and track data collections.                                                                                                                                                                                                                                                                                                |
 | [Digital Object Identifier (DOI)](#doi )                                           | No        | No          | Text                      | The registered persistent digital object identifier (DOI) associated with the data collection.                                                                                                                                                                                                                                                                                 |
 | [Funding Source](#funding_source )                     | No        | Yes         | Multi-part; see subfields           | Information about funding that supported the data collection.                                                                                                                                                                                                                                                                                                                  |
 | [External Source ID](#external_source_ID )             | No        | Yes         | Text                      | A unique identifier supplied by the depositor.                                                                                                                                                                                                                                                                                                                                 |
@@ -516,6 +517,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 | ---------------------------------------- | --------- | ----------- | --------------- | ------------------------------------------------------------------------------------- |
 | [Name](#distributor_items_name )         | Yes       | No          | Text            | The name of the organization(s) responsible for distributing the data collection.     |
 | [Location](#distributor_items_location ) | Yes       | No          | Text            | The location of the organization(s) responsible for distributing the data collection. |
+| [Order](#distributor_items_order )       | Yes       | No          | Number          | The order of importance for the distributors of the data collection.                  |
 
 ##### <a name="distributor_items_name"></a>10.1.1. Name
 
@@ -563,12 +565,41 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 "Princeton, NJ"
 ```
 
+##### <a name="distributor_items_order"></a>10.1.3. Order
+
+**Description:** The order of importance for the distributors of the data collection.
+
+**Required**: Yes
+
+**Repeatable**: No
+
+**Accepted Values**: Number
+
+**Controlled Vocabulary:** N/A
+
+**Usage Notes:** A value of '1' indicates the primary distributor, '2' the second, and so forth.
+
+**Examples:** 
+
+```json
+1
+```
+
+```json
+2
+```
+
+```json
+3
+```
+
 ###### Complete Distributor Examples (with Subfields):
 ```json
 [
     {
         "name": "Inter-university Consortium for Political and Social Research",
-        "location": "Ann Arbor, MI"
+        "location": "Ann Arbor, MI",
+        "order": 1
     }
 ]
 ```
@@ -577,16 +608,46 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 [
     {
         "name": "Inter-university Consortium for Political and Social Research",
-        "location": "Ann Arbor, MI"
+        "location": "Ann Arbor, MI",
+        "order": 1
     },
     {
         "name": "Roper Center for Public Opinion Research",
-        "location": "Princeton, NJ"
+        "location": "Princeton, NJ",
+        "order": 2
     }
 ]
 ```
 
-### <a name="doi"></a>11. Digital Object Identifier (DOI)         
+### <a name="study_number"></a>11. Study Number         
+
+**Description:** A unique, numerical value used by ICPSR to identify and track data collections.
+
+**Required**: Yes
+
+**Repeatable**: No
+
+**Accepted Values**: Number
+
+**Controlled Vocabulary:** N/A
+
+**Usage Notes:** The study number is automatically generated by ICPSR and is unique. Current study numbers are five digits, though four digit numbers were once standard and are still acceptable.
+
+**Examples:** 
+
+```json
+2760
+```
+
+```json
+3025
+```
+
+```json
+38672
+```
+
+### <a name="doi"></a>12. Digital Object Identifier (DOI)         
 
 **Description:** The registered persistent digital object identifier (DOI) associated with the data collection.
 
@@ -610,7 +671,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 "https://doi.org/10.3886/ICPSR06425.v1"
 ```
 
-### <a name="funding_source"></a>12. Funding Source         
+### <a name="funding_source"></a>13. Funding Source         
 
 **Description:** Information about funding that supported the data collection.
 
@@ -620,7 +681,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 
 **Accepted Values**: Multi-part element; see subfield definitions for more information.
 
-#### <a name="autogenerated_heading_5"></a>12.1. Subfields:
+#### <a name="autogenerated_heading_5"></a>13.1. Subfields:
 
 | Property                                            | Required? | Repeatable? | Accepted Values           | Description                                                                                         |
 | --------------------------------------------------- | --------- | ----------- | ------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -629,7 +690,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 | [Purpose](#funding_source_items_purpose )           | No        | Yes         | Text                      | The purpose of the funding.                                                                         |
 | [Order](#funding_source_items_order )               | Yes       | No          | Number                    | The relative order of funding sources associated with the data collection.                          |
 
-##### <a name="funding_source_items_agency"></a>12.1.1. Agency
+##### <a name="funding_source_items_agency"></a>13.1.1. Agency
 
 **Description:** The name of the organization that supported the production and/or archiving of the data collection.
 
@@ -664,7 +725,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 "Robert Wood Johnson Foundation"
 ```
 
-##### <a name="funding_source_items_grant_number"></a>12.1.2. Grant Number
+##### <a name="funding_source_items_grant_number"></a>13.1.2. Grant Number
 
 **Description:** The unique identifier associated with the funding.
 
@@ -699,7 +760,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 ]
 ```
 
-##### <a name="funding_source_items_purpose"></a>12.1.3. Purpose
+##### <a name="funding_source_items_purpose"></a>13.1.3. Purpose
 
 **Description:** The purpose of the funding.
 
@@ -734,7 +795,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 ]
 ```
 
-##### <a name="funding_source_items_order"></a>12.1.4. Order
+##### <a name="funding_source_items_order"></a>13.1.4. Order
 
 **Description:** The relative order of funding sources associated with the data collection.
 
@@ -795,7 +856,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 ]
 ```
 
-### <a name="external_source_ID"></a>13. External Source ID         
+### <a name="external_source_ID"></a>14. External Source ID         
 
 **Description:** A unique identifier supplied by the depositor.
 
@@ -823,7 +884,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 ]
 ```
 
-### <a name="summary"></a>14. Summary         
+### <a name="summary"></a>15. Summary         
 
 **Description:** A full description or abstract of the data collection's subject matter or intellectual content. The main goal of the Summary is to give the user a clear sense of what the collection is about, including the purpose of the collection, the major topics covered, and what questions the principal investigators attempted to answer when they conducted the data collection.
 
@@ -851,7 +912,7 @@ The Summary is written in the third person and avoids attempting to address issu
 "The Health and Relationship Project is a study of both spouses in same-sex and different-sex marriages who were legally married and aged 35 to 65 at the time of data collection (2015). There are two parts of this study: a baseline questionnaire and a daily diary questionnaire completed for 10 consecutive days; both components were completed online and spouses were asked to complete the surveys separately. The baseline questionnaire asks participants about a number of topics related to marriage and health, including stress, health status and health behaviors, relationship quality, and how they have approached health problems in the past. The diary questionnaire asks participants a number of questions about the past 24 hours, including daily stress experiences, social interactions, and health behaviors."
 ```
 
-### <a name="subject_term"></a>15. Subject Term         
+### <a name="subject_term"></a>16. Subject Term         
 
 **Description:** A controlled list of terms used for indexing purposes to indicate what topics a data collection reflects. Subject Terms serve to increase the collection's discoverability by topic.
 
@@ -890,7 +951,7 @@ The Summary is written in the third person and avoids attempting to address issu
 ]
 ```
 
-### <a name="geographic_coverage_area"></a>16. Geographic Coverage Area         
+### <a name="geographic_coverage_area"></a>17. Geographic Coverage Area         
 
 **Description:** Geographic areas covered in the data. In addition to the total geographic scope of the data, may include any additional levels of geographic coding provided in the variables.
 
@@ -938,7 +999,7 @@ The [Getty Thesaurus of Geographic Names](http://www.getty.edu/research/tools/vo
 ]
 ```
 
-### <a name="time_period"></a>17. Time Period         
+### <a name="time_period"></a>18. Time Period         
 
 **Description:** Information about the time period(s) to which the data refer. The time period should focus on the dates the data are actually about, regardless of when the data were collected.
 
@@ -948,14 +1009,14 @@ The [Getty Thesaurus of Geographic Names](http://www.getty.edu/research/tools/vo
 
 **Accepted Values**: Multi-part element; see subfield definitions for more information.
 
-#### <a name="autogenerated_heading_11"></a>17.1. Subfields:
+#### <a name="autogenerated_heading_11"></a>18.1. Subfields:
 
 | Property                                     | Required? | Repeatable? | Accepted Values | Description                                                                                                                                                                                                                                                                                                                                  |
 | -------------------------------------------- | --------- | ----------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Date](#time_period_items_date )             | Yes       | No          | Text            | The date for a time period to which the data refer.                                                                                                                                                                                                                                                                                          |
 | [Time Frame](#time_period_items_time_frame ) | No        | No          | Text            | An optional free text description of the time(s) (or 'time frame') to which the data refer, typically used for time periods that cannot be expressed using just numbers, such as seasons or semesters (e.g., 'Fall 2012'), or to add context to a specific Time Period when multiple entries are present (e.g., 'Wave 1' or 'Student data'). |
 
-##### <a name="time_period_items_date"></a>17.1.1. Date
+##### <a name="time_period_items_date"></a>18.1.1. Date
 
 **Description:** The date for a time period to which the data refer.
 
@@ -991,7 +1052,7 @@ Dates are formatted in accordance with ISO 8601 (YYYY, YYYY-MM, or YYYY-MM-DD). 
 "2020-01-21--2021-01-21"
 ```
 
-##### <a name="time_period_items_time_frame"></a>17.1.2. Time Frame
+##### <a name="time_period_items_time_frame"></a>18.1.2. Time Frame
 
 **Description:** An optional free text description of the time(s) (or 'time frame') to which the data refer, typically used for time periods that cannot be expressed using just numbers, such as seasons or semesters (e.g., 'Fall 2012'), or to add context to a specific Time Period when multiple entries are present (e.g., 'Wave 1' or 'Student data').
 
@@ -1043,7 +1104,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="collection_date"></a>18. Collection Date         
+### <a name="collection_date"></a>19. Collection Date         
 
 **Description:** Information on the date(s) when the data were physically collected.
 
@@ -1053,14 +1114,14 @@ The textual description should not simply restate the time period in words. For 
 
 **Accepted Values**: Multi-part element; see subfield definitions for more information.
 
-#### <a name="autogenerated_heading_12"></a>18.1. Subfields:
+#### <a name="autogenerated_heading_12"></a>19.1. Subfields:
 
 | Property                                         | Required? | Repeatable? | Accepted Values | Description                                                                                                                                                                                                                                                                                           |
 | ------------------------------------------------ | --------- | ----------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Date](#collection_date_items_date )             | Yes       | No          | Text            | The date for a period in which data were collected.                                                                                                                                                                                                                                                   |
 | [Time Frame](#collection_date_items_time_frame ) | No        | No          | Text            | An optional free text description of a period in which the data were collected, typically used for time periods that cannot be expressed using just numbers (e.g., 'Fall 2012') or to add context to a specific Collection Date when multiple entries are present (e.g., 'Wave 1' or 'Student data'). |
 
-##### <a name="collection_date_items_date"></a>18.1.1. Date
+##### <a name="collection_date_items_date"></a>19.1.1. Date
 
 **Description:** The date for a period in which data were collected.
 
@@ -1092,7 +1153,7 @@ The textual description should not simply restate the time period in words. For 
 "2020-01-21--2021-01-21"
 ```
 
-##### <a name="collection_date_items_time_frame"></a>18.1.2. Time Frame
+##### <a name="collection_date_items_time_frame"></a>19.1.2. Time Frame
 
 **Description:** An optional free text description of a period in which the data were collected, typically used for time periods that cannot be expressed using just numbers (e.g., 'Fall 2012') or to add context to a specific Collection Date when multiple entries are present (e.g., 'Wave 1' or 'Student data').
 
@@ -1144,7 +1205,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="universe"></a>19. Universe         
+### <a name="universe"></a>20. Universe         
 
 **Description:** The total group of persons or other entities (e.g., households, organizations, etc.) that are the object of research and to which analytic results refer.
 
@@ -1186,7 +1247,7 @@ The textual description should not simply restate the time period in words. For 
 "Uncertified ballots for the 2000 United States presidential election in Florida."
 ```
 
-### <a name="data_type"></a>20. Data Type         
+### <a name="data_type"></a>21. Data Type         
 
 **Description:** Information describing the kind of data included in the data collection.
 
@@ -1233,7 +1294,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="collection_note"></a>21. Collection Note         
+### <a name="collection_note"></a>22. Collection Note         
 
 **Description:** A description of technical details and other characteristics of the data collection (such as unique authoring, discrepancies, dissemination, or processing information) that cannot be recorded in other metadata elements but constitutes important information for the secondary data user.
 
@@ -1274,7 +1335,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="study_purpose"></a>22. Study Purpose         
+### <a name="study_purpose"></a>23. Study Purpose         
 
 **Description:** Describes the main objectives of the study, including the research questions being investigated.
 
@@ -1302,7 +1363,7 @@ The textual description should not simply restate the time period in words. For 
 "The purpose of the study was to explore the impact of interventions by Sexual Assault Nurse Examiners/Sexual Assault Response Teams (SANE/SART) on the judicial process. The goal of this study was to test the efficacy of SANE/SART programs as a tool in the criminal justice system. The American Prosecutors Research Institute and Boston College tested the hypotheses that SANE/SART exams increase arrest and prosecution rates. In testing this hypothesis, the project team sought to answer five primary research questions: (1) Is the arrest rate higher in cases where a SANE/SART exam is performed as compared with cases in which no exam is performed?, (2) Is the indictment/charging rate higher in such cases?, (3) Are guilty pleas more likely to be entered in such cases, and are pleas likely to be to the existing charge or to a lesser charge?, (4) Is the conviction rate higher in such cases?, and (5) Is the sentence more severe in such cases? In addition, the project team examined the participation of victims in the criminal justice process and the types of services that were offered them. As a large portion of SANE/SART programs focus on understanding victims' reactions to sexual assault and ensuring proper treatment to minimize the chance of further trauma, a central hypothesis to be tested was that improved case outcomes may be a result of increased participation by the victim in the identification, apprehension, and prosecution of the perpetrator. Moreover, the level of services offered and provided to victims, particularly those related to prosecution would likely affect case outcomes as well. Both the victim's participation in the criminal justice system and specifics of SANE/SART services, including evidence collection, were considered in determining the true impact of SANE/SART interventions on case outcomes."
 ```
 
-### <a name="study_design"></a>23. Study Design         
+### <a name="study_design"></a>24. Study Design         
 
 **Description:** Describes the procedures the researchers used to contact subjects and/or to collect the data.
 
@@ -1324,7 +1385,7 @@ The textual description should not simply restate the time period in words. For 
 "Data on organizational culture in each of the 12 courts (Part 1) were obtained by administering the Court Culture Assessment Instrument (CCAI) to all judges with a felony criminal court docket and to all senior court administrators. A total of 224 respondents completed the questionnaire. The CCAI was used to assess five key dimensions of current court culture orientation: (1) dominant case management style, (2) judicial and court staff relations, (3) change management, (4) courthouse leadership, and (5) internal organization. The determination of what culture judges and court administrators desired to establish in the near future was also obtained through the application of the same instrument (CACI) as practitioners were asked to indicate the type of culture in each work area (or content dimension) they would like to see in their court in the next five years. Additionally, surveys were conducted of prosecuting attorneys (Part 2) and public defender attorneys (Part 3) to gauge their views on how well the courts in which they practice achieve the goals of access, fairness, and managerial effectiveness. Every prosecutor and public defender with two years or more experience in representing the state or criminal defendants in felony cases was asked to complete a questionnaire probing their thoughts on how well their court acted to promote access to records through availability and staff cooperation, treating litigants, witnesses, jurors and others fairly, and demonstrating concern for the rights and interests of others in the criminal trial process, including attorney and victims. A total of 334 prosecuting attorneys and 260 public defense attorneys completed the 46-item trial court process survey."
 ```
 
-### <a name="variable_description"></a>24. Variable Description         
+### <a name="variable_description"></a>25. Variable Description         
 
 **Description:** Significant variables that are present in the data files distributed for public release, particularly demographic variables.
 
@@ -1348,7 +1409,7 @@ The textual description should not simply restate the time period in words. For 
 "The LGBTQ Hate Crimes Interviews dataset contains more in-depth information, including victim demographic information, substance abuse history, information on whether the victim is open about their LGBTQ identification, the victim's job status, and information about how the victim reacted to the crime, such as whether or not they reported the crime to the police and their level of cooperation with the police and prosecution."
 ```
 
-### <a name="sampling"></a>25. Sampling         
+### <a name="sampling"></a>26. Sampling         
 
 **Description:** The methods used to select the subset of the population that data are to be collected from (e.g., simple, systematic, stratified).
 
@@ -1397,7 +1458,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="time_method"></a>26. Time Method         
+### <a name="time_method"></a>27. Time Method         
 
 **Description:** The time dimension in which the data were collected and framed.
 
@@ -1438,7 +1499,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="data_source"></a>27. Data Source         
+### <a name="data_source"></a>28. Data Source         
 
 **Description:** The source(s) of the data, when that source is external to the data collection and can be independently cited.
 
@@ -1473,7 +1534,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="collection_mode"></a>28. Collection Mode         
+### <a name="collection_mode"></a>29. Collection Mode         
 
 **Description:** The procedure(s), technique(s), or mode(s) of inquiry used to collect the data.
 
@@ -1523,7 +1584,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="extent_of_processing"></a>29. Extent of Processing         
+### <a name="extent_of_processing"></a>30. Extent of Processing         
 
 **Description:** Describes processing activities and checks performed on data collections by ICPSR curation staff.
 
@@ -1562,7 +1623,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="weight"></a>30. Weight         
+### <a name="weight"></a>31. Weight         
 
 **Description:** A description of the weight variables and the criteria for using them in analyzing the data. May included other information about how the data is weighted even if no weight variables are available.
 
@@ -1590,7 +1651,7 @@ The textual description should not simply restate the time period in words. For 
 "The 1996 NES dataset includes two final person-level analysis weights which incorporate sampling, nonresponse, and post-stratification factors. One weight (variable #4) is for longitudinal micro-level analysis using the 1996 NES Panel. The other weight (variable #3) is for analysis of the 1996 NES combined sample (Panel component cases plus Cross-section supplement cases). In addition, a Time Series Weight (variable #5) which corrects for Panel attrition was constructed. This weight should be used in analyses which compare the 1996 NES to earlier unweighted National Election Study data collections."
 ```
 
-### <a name="response_rates"></a>31. Response Rates         
+### <a name="response_rates"></a>32. Response Rates         
 
 **Description:** The percentage of respondents in the sample who participated in the data collection.
 
@@ -1618,7 +1679,7 @@ The textual description should not simply restate the time period in words. For 
 "Not applicable."
 ```
 
-### <a name="scale"></a>32. Scale         
+### <a name="scale"></a>33. Scale         
 
 **Description:** Any commonly known scale used to collect data for the data collection (e.g., psychological scales such as MMPI and CPI, or occupational scales such as the Census Occupational Codes).
 
@@ -1648,7 +1709,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="unit_of_observation"></a>33. Unit of Observation         
+### <a name="unit_of_observation"></a>34. Unit of Observation         
 
 **Description:** Describes the entity being analyzed in the data collection; otherwise known as analysis unit.
 
@@ -1682,7 +1743,7 @@ The textual description should not simply restate the time period in words. For 
 ]
 ```
 
-### <a name="smallest_geographic_unit"></a>34. Smallest Geographic Unit         
+### <a name="smallest_geographic_unit"></a>35. Smallest Geographic Unit         
 
 **Description:** The smallest geographic unit used in the dataset.
 
@@ -1716,7 +1777,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 "precinct"
 ```
 
-### <a name="restrictions"></a>35. Restrictions         
+### <a name="restrictions"></a>36. Restrictions         
 
 **Description:** Information regarding any limitations on use or restrictions on access to the file(s).
 
@@ -1736,7 +1797,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 "These data may not be used for any purpose other than statistical reporting and analysis. Use of these data to learn the identity of any person or establishment is strictly prohibited. To protect respondent privacy, certain files within this data collection are restricted from general dissemination. To obtain these files, researchers must agree to the terms and conditions of a Restricted Data Use Agreement in accordance with existing ICPSR servicing policies."
 ```
 
-### <a name="changes_to_collection"></a>36. Changes to Collection         
+### <a name="changes_to_collection"></a>37. Changes to Collection         
 
 **Description:** A summary description of changes that have been made to the data collection since its last release.
 
@@ -1750,14 +1811,14 @@ This element is only meant to convey specific, known, geography. If there is a v
 
 **Usage Notes:** Textual changes are recorded only when data or documentation files are updated or added to the data collection (and the Version number is incremented).
 
-#### <a name="autogenerated_heading_20"></a>36.1. Subfields:
+#### <a name="autogenerated_heading_20"></a>37.1. Subfields:
 
 | Property                                   | Required? | Repeatable? | Accepted Values | Description                                                                    |
 | ------------------------------------------ | --------- | ----------- | --------------- | ------------------------------------------------------------------------------ |
 | [Date](#changes_to_collection_items_date ) | No        | No          | Text            | The date on which an update occurred. ICPSR automatically generates this date. |
 | [Note](#changes_to_collection_items_note ) | No        | No          | Text            | An explanation of the nature of the update.                                    |
 
-##### <a name="changes_to_collection_items_date"></a>36.1.1. Date
+##### <a name="changes_to_collection_items_date"></a>37.1.1. Date
 
 **Description:** The date on which an update occurred. ICPSR automatically generates this date.
 
@@ -1777,7 +1838,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 "2019-05-05"
 ```
 
-##### <a name="changes_to_collection_items_note"></a>36.1.2. Note
+##### <a name="changes_to_collection_items_note"></a>37.1.2. Note
 
 **Description:** An explanation of the nature of the update.
 
@@ -1819,7 +1880,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 ]
 ```
 
-### <a name="series"></a>37. Series         
+### <a name="series"></a>38. Series         
 
 **Description:** An ICPSR series is a named collection of related studies.
 
@@ -1859,7 +1920,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 ]
 ```
 
-### <a name="classification"></a>38. Classification         
+### <a name="classification"></a>39. Classification         
 
 **Description:** ICPSR classifications address topics broadly, and are meant to be a good starting point for exploring the collection.
 
@@ -1887,7 +1948,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 ]
 ```
 
-### <a name="filesets"></a>39. Filesets         
+### <a name="filesets"></a>40. Filesets         
 
 **Description:**  Identifies the grouping of files in a data collection. Every ICPSR data collection with at least one file must have at least one defined Fileset.
 
@@ -1901,7 +1962,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 
 **Usage Notes:** Filesets are used at ICPSR to make a convenient package for description, discovery, preservation and dissemination -- a package that is smaller than the data collection but larger than the individual file. A fileset typically contains a single file of statistical data plus additional files that support the data -- such as setups for statistical software, documentation, and alternative data representations. A data collection may have multiple filesets. Each Fileset has a Number, and may also have a Name and an SDA (Survey Documentation and Analysis) Note.
 
-#### <a name="autogenerated_heading_22"></a>39.1. Subfields:
+#### <a name="autogenerated_heading_22"></a>40.1. Subfields:
 
 | Property                              | Required? | Repeatable? | Accepted Values | Description                                                                                               |
 | ------------------------------------- | --------- | ----------- | --------------- | --------------------------------------------------------------------------------------------------------- |
@@ -1909,7 +1970,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 | [Name](#filesets_items_name )         | No        | No          | Text            | A brief title used to distinguish each fileset within a data collection.                                  |
 | [SDA Note](#filesets_items_sda_note ) | No        | No          | Text            | Additional information about the fileset for the purpose of helping online analysis users.                |
 
-##### <a name="filesets_items_number"></a>39.1.1. Number
+##### <a name="filesets_items_number"></a>40.1.1. Number
 
 **Description:** A number that uniquely identifies a 'part' or component file that is associated with the data collection.
 
@@ -1935,7 +1996,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 3
 ```
 
-##### <a name="filesets_items_name"></a>39.1.2. Name
+##### <a name="filesets_items_name"></a>40.1.2. Name
 
 **Description:** A brief title used to distinguish each fileset within a data collection.
 
@@ -1967,7 +2028,7 @@ This element is only meant to convey specific, known, geography. If there is a v
 "Northbound Restricted-Use Data"
 ```
 
-##### <a name="filesets_items_sda_note"></a>39.1.3. SDA Note
+##### <a name="filesets_items_sda_note"></a>40.1.3. SDA Note
 
 **Description:** Additional information about the fileset for the purpose of helping online analysis users.
 
