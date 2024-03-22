@@ -4,7 +4,7 @@
   "title": "ICPSR Metadata Schema",
   "description": "This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.",
   "type": "object",
-  "required": [ "title", "principal_investigator", "version", "version_date", "distributor", "summary", "subject_term", "time_period", "geographic_coverage_area" ],
+  "required": [ "title", "principal_investigator", "version", "version_date", "distributor", "summary", "subject_term", "time_period", "geographic_coverage_area", "study_number" ],
   "additionalProperties": false,
   "properties": {
     "version": {
