@@ -94,13 +94,23 @@
             } ,
             "controlledVocab": "The [ICPSR Personal Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10002) and [Organization Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10004) are the primary authority control sources for PI names. The [Virtual International Authority File](https://viaf.org/) (VIAF) serves as a secondary resource if names are not present in ICPSR lists.",
             "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_person?version=v1",
-            "examples": [              
-              "James A. McCann",
-              "Warren Winkelstein Jr.",
-              "E.V. Oppenhuis",
-              "Miner P. Marchbanks III",
-              "The New York Times",
-              "United States Department of Justice. Office of Justice Programs. Bureau of Justice Statistics"
+            "examples": [   
+              {
+                "given_name": "James A.",
+                "family_name": "McCann"
+              },
+              {
+                "given_name": "Warren",
+                "family_name": "Winkelstein Jr."
+              },
+              {
+                "given_name": "E.V.",
+                "family_name": "Oppenhuis"
+              },
+              {
+                "given_name": "Miner P.",
+                "family_name": "Marchbanks III"
+              }
             ]
           },
           "organization": {
