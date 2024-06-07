@@ -79,11 +79,21 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the entity primarily responsible for the data collection.",
-            "type": "string",
+          "person": {
+            "description": "The name of a person primarily responsible for the data collection.",
+            "type": "object",
+            "properties": {
+              "given_name": {
+                "description": "The person's given name.",
+                "type": "string"
+              },
+              "family_name": {
+                "description": "The person's family name (e.g., surname).",
+                "type": "string"
+              }
+            } ,
             "controlledVocab": "The [ICPSR Personal Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10002) and [Organization Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10004) are the primary authority control sources for PI names. The [Virtual International Authority File](https://viaf.org/) (VIAF) serves as a secondary resource if names are not present in ICPSR lists.",
-            "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_name?version=v1",
+            "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_person?version=v1",
             "examples": [              
               "James A. McCann",
               "Warren Winkelstein Jr.",
@@ -93,11 +103,11 @@
               "United States Department of Justice. Office of Justice Programs. Bureau of Justice Statistics"
             ]
           },
-          "affiliation": {
-            "description": "The organization with which an individual PI was affiliated at the time of a data collection's deposit at ICPSR.",
+          "organization": {
+            "description": "The name of the organization primarily responsible for the data collection OR the organization with which an individual PI was affiliated at the time of a data collection's deposit at ICPSR.",
             "type": "string",
             "controlledVocab": "The [ICPSR Organization Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10004) is the primary authority control source for PI Affiliations. The [Virtual International Authority File](https://viaf.org/) (VIAF) serves as a secondary resource if names are not present in the ICPSR list.",
-            "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_affiliation?version=v1",
+            "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_organization?version=v1",
             "examples": [
               "University of Michigan",
               "Harvard University. Medical School",
