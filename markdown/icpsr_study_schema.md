@@ -357,27 +357,31 @@ For the names of organizations:
 **Examples:** 
 
 ```json
-"James A. McCann"
+{
+    "given_name": "James A.",
+    "family_name": "McCann"
+}
 ```
 
 ```json
-"Warren Winkelstein Jr."
+{
+    "given_name": "Warren",
+    "family_name": "Winkelstein Jr."
+}
 ```
 
 ```json
-"E.V. Oppenhuis"
+{
+    "given_name": "E.V.",
+    "family_name": "Oppenhuis"
+}
 ```
 
 ```json
-"Miner P. Marchbanks III"
-```
-
-```json
-"The New York Times"
-```
-
-```json
-"United States Department of Justice. Office of Justice Programs. Bureau of Justice Statistics"
+{
+    "given_name": "Miner P.",
+    "family_name": "Marchbanks III"
+}
 ```
 
 ###### <a name="principal_investigator_items_person_given_name"></a>8.1.2.1. Given Name
