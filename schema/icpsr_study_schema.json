@@ -94,6 +94,7 @@
               }
             },
             "required": ["given_name", "family_name"],
+            "additionalProperties": false,
             "examples": [   
               {
                 "given_name": "James A.",
@@ -120,7 +121,7 @@
               "University of Michigan",
               "Harvard University. Medical School",
               "University of California, Irvine",
-              "Urban Institute"
+              "United States Department of Health and Human Services. Centers for Disease Control and Prevention. Office of Minority Health and Health Disparities"
             ]
           },
           "order": {
