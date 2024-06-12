@@ -354,8 +354,8 @@ Additional points regarding affiliated organizations:
 
 | Property                                                         | Required? | Repeatable? | Accepted Values | Description                               |
 | ---------------------------------------------------------------- | --------- | ----------- | --------------- | ----------------------------------------- |
-| [Given Name](#principal_investigator_items_person_given_name )   | No        | No          | Text            | The person's given name.                  |
-| [Family Name](#principal_investigator_items_person_family_name ) | No        | No          | Text            | The person's family name (e.g., surname). |
+| [Given Name](#principal_investigator_items_person_given_name )   | Yes       | No          | Text            | The person's given name.                  |
+| [Family Name](#principal_investigator_items_person_family_name ) | Yes       | No          | Text            | The person's family name (e.g., surname). |
 
 **Examples:** 
 
@@ -391,7 +391,7 @@ Additional points regarding affiliated organizations:
 
 **Description:** The person's given name.
 
-**Required**: No
+**Required**: Yes
 
 **Repeatable**: No
 
@@ -401,7 +401,7 @@ Additional points regarding affiliated organizations:
 
 **Description:** The person's family name (e.g., surname).
 
-**Required**: No
+**Required**: Yes
 
 **Repeatable**: No
 
