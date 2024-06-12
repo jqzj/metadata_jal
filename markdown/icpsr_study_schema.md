@@ -350,8 +350,6 @@ Additional points regarding affiliated organizations:
 
 **Accepted Values**: Multi-part element; see subfield definitions for more information.
 
-**Additional properties**: [[Any type: allowed]](# "Additional Properties of any type are allowed.")
-
 | Property                                                         | Required? | Repeatable? | Accepted Values | Description                               |
 | ---------------------------------------------------------------- | --------- | ----------- | --------------- | ----------------------------------------- |
 | [Given Name](#principal_investigator_items_person_given_name )   | Yes       | No          | Text            | The person's given name.                  |
@@ -432,7 +430,7 @@ Additional points regarding affiliated organizations:
 ```
 
 ```json
-"Urban Institute"
+"United States Department of Health and Human Services. Centers for Disease Control and Prevention. Office of Minority Health and Health Disparities"
 ```
 
 ##### <a name="principal_investigator_items_order"></a>8.1.3. Order
