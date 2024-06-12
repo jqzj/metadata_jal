@@ -75,7 +75,8 @@
     "principal_investigator": {
       "description": "The entity or entities responsible for the data collection, presented in order of importance. A Principal Investigator (PI) may be a person or an organization. Each data collection requires at least one PI.",
       "type": "array",
-      "controlledVocab": "N/A",
+      "controlledVocab": "The [ICPSR Personal Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10002) and [Organization Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10004) are the primary authority control sources for PI names. The [Virtual International Authority File](https://viaf.org/) (VIAF) serves as a secondary resource if names are not present in ICPSR lists.",
+      "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_names?version=v1",
       "items": {
         "type": "object",
         "properties": {
@@ -92,8 +93,6 @@
                 "type": "string"
               }
             } ,
-            "controlledVocab": "The [ICPSR Personal Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10002) and [Organization Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10004) are the primary authority control sources for PI names. The [Virtual International Authority File](https://viaf.org/) (VIAF) serves as a secondary resource if names are not present in ICPSR lists.",
-            "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_person?version=v1",
             "examples": [   
               {
                 "given_name": "James A.",
@@ -116,8 +115,6 @@
           "organization": {
             "description": "The name of the organization primarily responsible for the data collection OR the organization with which an individual PI was affiliated at the time of a data collection's deposit at ICPSR.",
             "type": "string",
-            "controlledVocab": "The [ICPSR Organization Names Authority List](https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10004) is the primary authority control source for PI Affiliations. The [Virtual International Authority File](https://viaf.org/) (VIAF) serves as a secondary resource if names are not present in the ICPSR list.",
-            "$ref": "https://schemas.icpsr.umich.edu/schema/yaml/pi_organization?version=v1",
             "examples": [
               "University of Michigan",
               "Harvard University. Medical School",
@@ -133,27 +130,36 @@
             "examples": [1,2,3]
           }
         },
-        "required": ["name", "order"],
-        "dependentRequired": { "affiliation": ["name"] },
+        "oneOf": [
+          { "required": ["person"] },
+          { "required": ["organization"] }
+        ],
+        "required": ["order"],
         "additionalProperties": false
       },
       "minItems": 1,
       "examples": [
         [
           {
-            "name": "Jane Doe",
+            "person": {
+              "given_name": "Jane",
+              "family_name": "Doe"
+            },
             "affiliation": "Urban Institute",
             "order": 1
           },
           {
-            "name": "John Doe",
-            "affliliation": "Harvard University. Medical School",
+            "person": {
+              "given_name": "John Q.",
+              "family_name": "Public"
+            },
+            "organization": "Harvard University. Medical School",
             "order": 2
           }
         ],
         [
           {
-            "name": "Urban Institute",
+            "organization": "Urban Institute",
             "order": 1
           }
         ]
