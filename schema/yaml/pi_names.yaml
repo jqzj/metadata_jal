@@ -2,7 +2,7 @@
   $schema: https://json-schema.org/draft-07/schema#
   $id: https://schemas.icpsr.umich.edu/schema/yaml/pi_names?version=v1
   usageNotes: |+
-    A principal investigator (PI) may be a person or an organization; use the Person or Organization element as required. If the PI is identified as a person, their affiliated organization (if applicable) should be included in the Organization element.
+    A principal investigator (PI) may be a person or an organization; use the Person or Organization element as appropriate. If the PI is identified as a person, their affiliated organization (if applicable) should be included in the Organization element.
 
     When entering the name of an individual or organizational PI, the following hierarchy of authority control sources should be used to make sure the name conforms to best practices within ICPSR and the broader academic community:  
 
@@ -13,7 +13,7 @@
 
     For the names of people: 
       
-      * The given (i.e., 'first') name may include a middle name or initial. If the person only uses an inital for the given name, do not include a space between first and middle initials.
+      * The given (i.e., 'first') name may include the middle name or initial. If the person only uses an inital for the given name, do not include a space between first and middle initials (e.g., 'E.V.').
       * The family (i.e., 'last') name can include any suffixes (such as 'II' or 'Jr.'). 
       * Abbreviations are discouraged (especially 'et al.').
 
@@ -25,6 +25,6 @@
 
     Additional points regarding affiliated organizations:
       
-      * If a PI's organizational affiliation is not known, use the term 'Unknown' for the PI Organization element.
-      * If the list of PIs includes multiple people affiliated with the same organization, include the affiliated organization's name for each person.
+      * If a PI's organizational affiliation is not known, use the term 'Unknown' in the PI Organization element.
+      * If multiple PIs (people) are affiliated with the same organization, the affiliated organization's name must be included for each person.
 

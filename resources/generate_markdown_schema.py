@@ -78,6 +78,8 @@ def resolve(obj, cache):
                     new = {**new, **result} # Assumes that $ref always points to a dict
                 except KeyError as ex:
                     raise KeyError(f"Cannot find {value} in the schema cache")
+            elif key == "oneOf":
+                continue
             else:
                 new[key] = resolve(value, cache)
         return new
