@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: June 27, 2024
+Last updated: June 28, 2024
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -893,7 +893,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 
 **Controlled Vocabulary:** N/A
 
-**ICPSR Input Guidance:** This is an internal ICPSR element that is not publicly displayed.
+**ICPSR Input Guidance:** This is an internal ICPSR element that is not publicly displayed. An External Source ID consists of: an ICPSR-defined source organization code, a colon, and a Depositor-supplied ID.
 
 **Examples:** 
 
