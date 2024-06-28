@@ -7,3 +7,4 @@
 | Mar. 22, 2024 | v3 | Added 'study number' and distributor 'order' elements to the schema to address earlier oversight. |
 | June 18, 2024 | v4 | Revised 'principal investigator' element to better reflect its use in ICPSR systems. |
 | June 27, 2024 | v5 | Updated internal guidance for the 'funding purpose' element. |
+| June 28, 2024 | v6 | Updated internal guidance for the 'external source id' element. |
