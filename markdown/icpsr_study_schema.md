@@ -1,6 +1,6 @@
 # ICPSR Metadata Schema
 
-Last updated: June 18, 2024
+Last updated: June 27, 2024
 
 This is the metadata schema used to describe data collections at the Inter-university Consortium for Political and Social Research (ICPSR). These rules and definitions represent ICPSR's metadata practices and are intended to (a) assist ICPSR staff with metadata entry, and (b) help ICPSR users -- including data depositors and researchers accessing data -- understand how to use and interpret our metadata.
 
@@ -803,7 +803,7 @@ If a non-ICPSR distributor is necessary, please confirm the standards with the M
 | secondary analysis of data | The funder supported secondary analysis performed on the data. |
 | archiving of data | The funder supported the archiving and preservation of the data. |
 
-**ICPSR Input Guidance:** This is an internal ICPSR element that is not publicly displayed.
+**ICPSR Input Guidance:** This is an internal ICPSR element that is not publicly displayed. Certain ICPSR topical archives find this useful as they assemble reports for their funding agencies.
 
 **Examples:** 
 
