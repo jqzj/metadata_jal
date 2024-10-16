@@ -1,11 +1,17 @@
-# ICPSR Bulk Metadata Export API Documentation
+# ICPSR Metadata API Documentation
 
-ICPSR is producing a new application programming interface (API) to allow community members to perform bulk exports of metadata records. This new API will help ICPSR simplify and standardize the process of creating metadata records across its systems and at the same time allow users to have more control over which metadata records they want.
+## Under Development: A New API to Export Metadata!
 
-While the Metadata  API is currently still under development, this page will serve as a clearinghouse for related information and user documentation.
+ICPSR is developing a new application programming interface (API) so that community members can perform bulk exports of metadata records. This new API will:
+ - Simplify and standardize the process of accessing metadata records.
+ - Allow ICPSR to provide metadata in a broader range of standards and formats.
+ - Support more complex queries so that users can find the metadata records that best meet their needs.
 
-## ICPSR Metadata Mappings
+## ICPSR Metadata API Mappings
 
-The ICPSR Metadata API will initially produce records using the following schema: [DCAT-US](https://resources.data.gov/resources/dcat-us/), [MARCXML](https://www.loc.gov/standards/marcxml/), and [Dublin Core](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/). Other export formats will follow!
+Upon its release, the ICPSR Metadata API will produce records that conform to the following standards (with more to come in the future): 
+ - [DCAT-US](https://resources.data.gov/resources/dcat-us/)
+ - [MARCXML](https://www.loc.gov/standards/marcxml/)
+ - [Dublin Core](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/). 
 
-To better understand how ICPSR's local metadata schema maps to elements in the above standards, please consult this [ICPSR Metadata API Mappings](https://docs.google.com/spreadsheets/d/1Avw212FfzxRjsUFvlJOLtsJclKeL8VJc0pbhLQevXg8/edit?usp=sharing) spreadsheet.
+This [Metadata API Mappings](https://docs.google.com/spreadsheets/d/1Avw212FfzxRjsUFvlJOLtsJclKeL8VJc0pbhLQevXg8/edit?usp=sharing) spreadsheet provides more information about how ICPSR metadata elements align with the above-mentioned standards. 
