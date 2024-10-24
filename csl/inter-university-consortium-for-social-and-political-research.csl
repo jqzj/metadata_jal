@@ -31,13 +31,13 @@
       <text variable="title" suffix=". "/>
       <group suffix=", ">
         <choose>
-          <if variable="seconddistributor">
-            <text variable="publisher" suffix=", "/>
-            <text variable="seconddistributor" suffix=" "/>
+          <if variable="publisher">
+            <text variable="original-publisher" suffix=", "/>
+            <text variable="publisher" suffix=" "/>
             <text value="[distributors]"/>
           </if>
           <else>
-            <text variable="publisher" suffix=" "/>
+            <text variable="original-publisher" suffix=" "/>
             <text value="[distributor]"/>
           </else>
         </choose>
