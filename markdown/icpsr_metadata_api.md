@@ -18,6 +18,8 @@ This [Metadata API Mappings](https://docs.google.com/spreadsheets/d/1Avw212FfzxR
 
 ## Additional Mapping Details
 
+This section provides additional information about non-standard mappings from ICPSR's local metadata schema to various export schemas available via the API.
+
 ### Geographic Coverage Area
 
 The current version of DCAT-US only permits a single value for the [spatial](https://resources.data.gov/resources/dcat-us/#spatial) metadata element. In cases where a study has multiple Geographic Coverage Area entries, ICPSR will use the term "Multiple" in the 'spatial' property and then add all the terms to an array in the 'spatialExt' property, an ICPSR-specific extension of the the base DCAT-US schema.
@@ -26,15 +28,15 @@ The current version of DCAT-US only permits a single value for the [spatial](htt
 
 #### Dublin Core and MARCXML Modifications
 
-While ICPSR's [Time Period](https://icpsr.github.io/metadata/icpsr_study_schema/#18-time-period) element is repeatable, not all metadata standards permit multiple date elements or allow structured descriptive text to contextualize multiple dates. To better align with the Dublin Core and MARCXML standards and simplify the presentation of time period information, ICPSR will collapse multiple time periods into a single date range representing the earliest and latest dates to which the data refer.
+While ICPSR's [Time Period](https://icpsr.github.io/metadata/icpsr_study_schema/#18-time-period) element is repeatable, not all metadata standards permit multiple date elements or allow structured descriptive text to contextualize multiple date values. To better align with the Dublin Core and MARCXML standards and simplify the presentation of time period information, ICPSR will collapse multiple time periods into a single date range representing the earliest and latest dates to which the data refer.
 
 #### DCAT-US Modifications
 
 The current version of DCAT-US only permits a single value for the [temporal](https://resources.data.gov/resources/dcat-us/#temporal) metadata element. In cases where a study has multiple Time Period entries, ICPSR will collapse them into a single date range (representing the earliest and latest dates to which the data refer) and use that value for the 'temporal' property. Each individual Time Period entry will then be added to an array in the 'temporalExt' property, an ICPSR-specific extension of the the base DCAT-US schema.
 
-#### Restrictions
+### Restrictions
 
-ICPSR's information about _data availability_ (i.e., the availability of data for members-only vs. the general public) and _restriction type_ (i.e., restricted use vs. public use) are maintained in system administrative metadata (as opposed to study-level metadata). These details are combined with Restriction statements in relevant metadata elements in the various export schema, using the following conventions: 
+ICPSR's information about _data availability_ (i.e., the availability of data for members-only vs. the general public) and _restriction type_ (i.e., restricted use vs. public use) are maintained in system administrative metadata (as opposed to study-level metadata). These details are combined with Restriction statements in relevant metadata elements for the various export schema, using the following conventions: 
 
   - If ICPSR membership is required, the property value will start with the string "Available to ICPSR member institutions."; if not, it will start with "Available to the general public."
 
@@ -42,9 +44,9 @@ ICPSR's information about _data availability_ (i.e., the availability of data fo
 
 Here are examples of how these statements appear in metadata exports:
 
-| Terms | Example Values |
-|------ | -------------- |
+| Conditions | Example Values |
+|----------- | -------------- |
 | No membership requirement and no use restriction | "Available to the general public." |
 | Membership requirement and no use restriction | "Available to ICPSR member institutions." |
 | No membership requirement with a use restriction | "Available to the general public. Access to these data is restricted. Users interested in obtaining these data must complete a Restricted Data Use Agreement, specify the reason for the request, and obtain IRB approval or notice of exemption for their research. Visit [https://doi.org/10.3886/ICPSR37328.v1](https://doi.org/10.3886/ICPSR37328.v1) to apply for access to restricted data." |
-| Membership requirement with a restriction | "Available to ICPSR member institutions.  This data collection may not be used for any purpose other than statistical reporting and analysis. Use of these data to learn the identity of any person or establishment is prohibited. To protect respondent privacy, all data files in this collection are restricted from general dissemination. To obtain these restricted files, researchers must agree to the terms and conditions of a Restricted Data Use Agreement. Visit [https://doi.org/10.3886/ICPSR37229.v1](https://doi.org/10.3886/ICPSR37229.v1) to apply for access to restricted data."</restrctn>
+| Membership requirement with a use restriction | "Available to ICPSR member institutions. This data collection may not be used for any purpose other than statistical reporting and analysis. Use of these data to learn the identity of any person or establishment is prohibited. To protect respondent privacy, all data files in this collection are restricted from general dissemination. To obtain these restricted files, researchers must agree to the terms and conditions of a Restricted Data Use Agreement. Visit [https://doi.org/10.3886/ICPSR37229.v1](https://doi.org/10.3886/ICPSR37229.v1) to apply for access to restricted data."</restrctn>
