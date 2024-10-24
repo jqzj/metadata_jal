@@ -34,14 +34,17 @@ The current version of DCAT-US only permits a single value for the [temporal](ht
 
 #### Restrictions
 
-ICPSRWe make a valiant effort by incorporating information about (a) member vs. public and (b) restricted access vs. direct download in the DDI <restrctn> field, but it would require some custom coding to parse out the info. Here's a breakdown of how we handle this field:
+ICPSR's information about _data availability_ (i.e., the availability of data for members-only vs. the general public) and _restriction type_ (i.e., restricted use vs. public use) are maintained in system administrative metadata (as opposed to study-level metadata). These details are combined with Restriction statements in relevant metadata elements in the various export schema, using the following conventions: 
 
-(a) If ICPSR membership is required, <restrctn> will start with the string "Available to ICPSR member institutions."; if not, it will start with "Available to the general public."
+  - If ICPSR membership is required, the property value will start with the string "Available to ICPSR member institutions."; if not, it will start with "Available to the general public."
 
-b) If there are no additional access restrictions (i.e., the 'restricted' flag in the API's source metadata is 'false') then there will be no additional text.  If there are access restrictions (i.e., the 'restricted' flag is 'true') there will be additional text (the content of our 'Restrictions' metadata field, along with boiler text to 'Visit [study DOI] to apply for access to restricted data.'
+  - If there are additional use restrictions, the content of the Restrictions metadata field will be appended, along with a hyperlink to the study's home page for more information. 
 
-Here are examples of how these would actually look (using dummy data/fake DOIs):
-No membership and direct download:  <restrctn>"Available to the general public."</restrctn>
-Membership and direct download  :  <restrctn>" Available to ICPSR member institutions."</restrctn>
-No membership and access restriction:  <restrctn>"Available to the general public. These data may not be used for any purpose other than statistical reporting and analysis. Use of these data to learn the identity of any person or establishment is strictly prohibited. To protect respondent privacy, certain files within this data collection are restricted from general dissemination. To obtain these files, researchers must agree to the terms and conditions of a Restricted Data Use Agreement in accordance with existing ICPSR servicing policies. Visit https;//actual-study-doi to apply for access to restricted data." </restrctn>
-Membership and access restriction:  <restrctn>" Available to ICPSR member institutions.  These data may not be used for any purpose other than statistical reporting and analysis. Use of these data to learn the identity of any person or establishment is strictly prohibited. To protect respondent privacy, certain files within this data collection are restricted from general dissemination. To obtain these files, researchers must agree to the terms and conditions of a Restricted Data Use Agreement in accordance with existing ICPSR servicing policies. Visit https;//actual-study-doi to apply for access to restricted data."</restrctn>
+Here are examples of how these statements appear in metadata exports:
+
+| Terms | Example Values |
+|------ | -------------- |
+| No membership requirement and no use restriction | "Available to the general public." |
+| Membership requirement and no use restriction | "Available to ICPSR member institutions." |
+| No membership requirement with a use restriction | "Available to the general public. Access to these data is restricted. Users interested in obtaining these data must complete a Restricted Data Use Agreement, specify the reason for the request, and obtain IRB approval or notice of exemption for their research. Visit [https://doi.org/10.3886/ICPSR37328.v1](https://doi.org/10.3886/ICPSR37328.v1) to apply for access to restricted data." |
+| Membership requirement with a restriction | "Available to ICPSR member institutions.  This data collection may not be used for any purpose other than statistical reporting and analysis. Use of these data to learn the identity of any person or establishment is prohibited. To protect respondent privacy, all data files in this collection are restricted from general dissemination. To obtain these restricted files, researchers must agree to the terms and conditions of a Restricted Data Use Agreement. Visit [https://doi.org/10.3886/ICPSR37229.v1](https://doi.org/10.3886/ICPSR37229.v1) to apply for access to restricted data."</restrctn>
