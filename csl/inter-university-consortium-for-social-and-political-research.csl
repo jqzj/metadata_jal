@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" delimiter-precedes-et-al="never" demote-non-dropping-particle="never">
-  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
   <info>
     <title>Inter-university Consortium for Social and Political Research</title>
     <title-short>ICPSR</title-short>
@@ -29,19 +28,8 @@
         <name and="text" name-as-sort-order="all"/>
       </names>
       <text variable="title" suffix=". "/>
-      <group suffix=", ">
-        <choose>
-          <if variable="publisher">
-            <text variable="original-publisher" suffix=", "/>
-            <text variable="publisher" suffix=" "/>
-            <text value="[distributors]"/>
-          </if>
-          <else>
-            <text variable="original-publisher" suffix=" "/>
-            <text value="[distributor]"/>
-          </else>
-        </choose>
-      </group>
+      <text variable="publisher" suffix= " "/>
+      <text value="[distributor]" suffix=", "/>
       <date form="numeric" variable="issued" suffix=". "/>
       <text variable="DOI"/>
     </layout>
