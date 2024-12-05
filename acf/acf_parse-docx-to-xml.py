@@ -1040,20 +1040,15 @@ if __name__ == "__main__":
     with open(config_path, 'r') as file:
         details = json.load(file)
 
-    # make sure essential info is included: input_doc, out_dir, titleName, articleName, and state
-    missing_details = []
-    for key in ["input_doc", "out_dir", "xsd_file", "titleName", "articleName", "state"]:
-        if not details[key]:
-            missing_details.append[key]
-    if missing_details:
-        print(f"\n\nThe following config fields need to be completed: {' '.join(missing_details)}")
-        sys.exit(1)
+    # make sure XSD and XSL files have right paths
+    details['xsd_file'] = os.path.join(script_dir, details['xsd_file'])
+    details['xsl_file'] = os.path.join(script_dir, details['xsl_file'])
 
-    # make sure input_doc and out_dir exist
+    # make sure files/folders actually exist
     bad_path = False
-    for key in ["input_doc", "out_dir", "xsd_file"]:
+    for key in ["input_doc", "out_dir", "xsd_file", "xsl_file"]:
         if not os.path.exists(details[key]):
-            print(f'\n\n{key} does not exist! Verify path and update config file')
+            print(f'\n\n{details[key]} does not exist! Verify path and update config file')
             bad_path = True 
     if bad_path:
         sys.exit(1)
@@ -1083,7 +1078,7 @@ if __name__ == "__main__":
         print('\n\nAdd a state_code_pattern!')
         sys.exit(1)
 
-    # the 'partName' field must be a list, to accommodate variations
+    # the 'partName' field must be a list, to accommodate variations among records
     if not isinstance(details.get('partName'), list):
         print('\n\nThe "partName" value must be a list!')
         sys.exit(1)
