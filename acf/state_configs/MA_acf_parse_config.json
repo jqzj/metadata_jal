@@ -1,0 +1,23 @@
+{
+    "input_doc": "C:/testing/ACF/old/Massachusetts/Massachusetts_test.docx",
+    "out_dir": "C:/testing/ACF/old/Massachusetts",
+    "xsd_file": "C:/testing/ACF/schema_final.xsd",
+    "xsl_file": "C:/testing/ACF/acf_parse/statetemplatev5.xsl",
+    "category": "true",
+    "titleContent": "false",
+    "titleName": "Title",
+    "subtitleName": "",
+    "articleName": "Chapter",
+    "partName": [],
+    "subPartName": "",
+    "state": "Massachusetts",
+    "state_code_pattern": "(.+)\\s?\\u2013\\s?(.*)\\s+\\(?(MA Gen L.+\\d+[A-Za-z]*)\\s*\\)?$",
+    "statute_pattern": "^(MA Gen L.+\\d+[A-Za-z]*)\\s?[\\u2013\\u2014]\\s?(.*)",
+    "patterns": {
+        "base": "(.+)\\s?\\u2013\\s?(.*)\\s+",
+        "Idaho": "(.+)\\s?\\u2013\\s?(.*)\\s+\\(?(I\\.C\\. Stat.*?\\d+[A-Za-z]*)\\)?$",
+        "Massachusetts": "(.+)\\s?\\u2013\\s?(.*)\\s+\\(?(MA Gen L.+\\d+[A-Za-z]*)\\s*\\)?$",
+        "Nevada": "(.+)\\s?\\u2013\\s?(.*)\\s+\\(?(NRS[\\s\\.][A-Za-z0-9\\.]+)\\)?$",
+        "Oklahoma": "(.+?)\\s?\\u2013\\s?(.*?)\\s?\\(?(\\d+[A-Za-z]?\\sOK STAT \\u00A7\\s[\\d-]+([A-Za-z0-9\\-\\.]+)?)\\)?$"
+    }  
+}
