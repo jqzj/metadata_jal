@@ -1,8 +1,8 @@
 {
     "input_doc": "C:/testing/ACF/old/Massachusetts/Massachusetts_test.docx",
     "out_dir": "C:/testing/ACF/old/Massachusetts",
-    "xsd_file": "C:/testing/ACF/schema_final.xsd",
-    "xsl_file": "C:/testing/ACF/acf_parse/statetemplatev5.xsl",
+    "xsd_file": "schema_final.xsd",
+    "xsl_file": "statetemplatev5.xsl",
     "category": "true",
     "titleContent": "false",
     "titleName": "Title",
