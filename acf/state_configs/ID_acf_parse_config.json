@@ -1,8 +1,8 @@
 {
     "input_doc": "C:/testing/ACF/old/Idaho/Idaho_COR-DELV-9-20-24.docx",
     "out_dir": "C:/testing/ACF/old/Idaho",
-    "xsd_file": "C:/testing/ACF/schema_final.xsd",
-    "xsl_file": "C:/testing/ACF/acf_parse/statetemplatev5.xsl",
+    "xsd_file": "schema_final.xsd",
+    "xsl_file": "statetemplatev5.xsl",
     "category": "false",
     "titleContent": "false",
     "titleName": "Title",

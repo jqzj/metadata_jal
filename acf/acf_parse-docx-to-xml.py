@@ -121,7 +121,7 @@ def write_error(details, error_msg):
 def prep_cell_text(raw_txt):
 
     #clean string--remove curly quotes and zero-width spaces
-    txt_step_1 = raw_txt.replace('’', "'").replace('“', '"').replace('”', '"').replace('\u200b', '')
+    txt_step_1 = raw_txt.replace('’', "'").replace('“', '"').replace('”', '"').replace('\u200b', '').replace("\u2009", " ")
 
     #split into list of strings, trim white space from each string
     txt_step_2 = [item.strip() for item in txt_step_1.splitlines()]
@@ -218,7 +218,7 @@ def check_controlled_vocabs(cv_list, cv_used, details, current_position):
 
     return cv_list
 
-def parse_requirement_blocks(data, cell, requirements, details, parent_position):
+def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
 
     # Patterns to identify the different parts of each entry
     label_desc_state_code_pattern = rf"{details['state_code_pattern']}"
@@ -291,7 +291,7 @@ def parse_requirement_blocks(data, cell, requirements, details, parent_position)
         all_tags = [tag.strip() for tag in re.split(r"[;,:]", tags_text)]
         record['tags'] = check_controlled_vocabs(all_tags, "terms", details, current_position)
 
-        requirements.append(record)
+        temp_list.append(record)
 
         # increment to move on to the next group
         if data_limit - i < 3:
@@ -299,7 +299,7 @@ def parse_requirement_blocks(data, cell, requirements, details, parent_position)
         else:
             i += 3
 
-    return requirements
+    return temp_list
 
 def parse_to_dict(list_of_strings, cell, search_term):
 
@@ -368,7 +368,7 @@ def parse_tables(doc, details, record_data, object_type):
     for i, table in enumerate(doc.tables):
 
         # skip any table with only 1 column in first row
-        if (len(table.rows[0].cells) == 1) or ("Table of Contents" in table.rows[0].cells[0].text):
+        if (len(table.rows[0].cells) == 1) or ("Table of Contents" in table.rows[0].cells[0].text) or ("Domain Color Coding" in table.rows[0].cells[0].text):
             continue
 
         # Loop through each row in the table
@@ -388,7 +388,7 @@ def parse_tables(doc, details, record_data, object_type):
                         
                     else:
                         title_idx = 1
-                        office_idx = 2
+                        office_idx = 2 
 
                     # get the text in the adjacent cell; split lines and loop through text, checking for regex match. NOTE: simple string matching might also work...
                     cell_text = prep_cell_text(row.cells[title_idx].text)
@@ -408,7 +408,7 @@ def parse_tables(doc, details, record_data, object_type):
                     
                         #if record uses 'categories', get info:
                         if details["category"]:
-                            #category will occur before the title; get that and then move backward
+                            # category always occurs before the title; if the title is at index 0, something is fishy...
                             if title_dict['start_idx'] == 0:
                                 print('\n\nWARNING: config indicates that "Categories" are used, but none found in title cell!!')
                             else:
@@ -418,7 +418,7 @@ def parse_tables(doc, details, record_data, object_type):
                                 else:
                                     source_text = category_name
                                 
-                                category_source = find_source_link(row.cells[1], source_text)
+                                category_source = find_source_link(row.cells[title_idx], source_text)
                             
                                 #update 'current position'
                                 current_position = f"{category_name} - {current_position}"
@@ -468,9 +468,7 @@ def parse_tables(doc, details, record_data, object_type):
                         else:
                             current_position = current_title
                     except: 
-                        print('\n\nWARNING: may have a problem with "current_title_key" variable--check for any variation in Title name:\n\n')
-                        print(current_title_key)
-                        print(article_overview)
+                        print('\n\nWARNING: may have a problem with "current_title_key" variable--check for any variation in Title name:\n\n', article_overview)
                         sys.exit(1)
 
                     # add 'articles' list to our dict if it's not already there
@@ -513,9 +511,13 @@ def parse_tables(doc, details, record_data, object_type):
                             current_position += f" - {temp_article_dict['current_position']}"
 
                     # get associated federal records; then check for errors
-                    index_of_associated_records = [i for i, txt in enumerate(article_overview) if 'Associated Federal Records' in txt][0]
-                    if index_of_associated_records:
-                        temp_article_dict['associatedFederalRecords'] = check_controlled_vocabs(article_overview[index_of_associated_records + 1:], "federal", details, current_position)
+                    try:  
+                       index_of_associated_records = [i for i, txt in enumerate(article_overview) if 'Associated Federal Records' in txt][0]
+                    except IndexError:
+                        print(f'\n\nWARNING: "Associated Federal Records" is missing at {current_position}. Check Word DOCX and retry.')
+                        sys.exit(1)
+
+                    temp_article_dict['associatedFederalRecords'] = check_controlled_vocabs(article_overview[index_of_associated_records + 1:], "federal", details, current_position)
 
                     # if we expect to find parts, check to see if there is any text between the Article and the Associated Federal Records
                     if details['partName']:
@@ -524,9 +526,6 @@ def parse_tables(doc, details, record_data, object_type):
                         # if there is actually text here, return part info
                         if len(part_slice) > 0:
                             temp_article_dict['part'] = parse_to_dict(part_slice, overview_cell, details['partName'])
-
-                            if temp_article_dict['part'] is None:
-                                print('Here was the part_slice', part_slice)
 
                             if temp_article_dict['part']['current_position'] not in current_position:
                                 current_position += f" - {temp_article_dict['part']['current_position']}"
@@ -545,8 +544,15 @@ def parse_tables(doc, details, record_data, object_type):
                                     if temp_article_dict['part']['subPart']['current_position'] not in current_position:
                                         current_position += f" - {temp_article_dict['part']['subPart']['current_position']}"
 
-                    # now move to the next column and get definitions and requirements. Note that we need to remove any strings with just whitespace
-                    statutes_cell = row.cells[1]
+                    # now move to the next column and get definitions and requirements. Note that some Word Docx files may have a varied # of cells per row. We need to test this... 
+                    statute_cell_index = 1
+                    while True:
+                        if prep_cell_text(row.cells[0].text) != prep_cell_text(row.cells[statute_cell_index].text):
+                            break
+                        else:
+                            statute_cell_index += 1
+
+                    statutes_cell = row.cells[statute_cell_index]
                     statutes = prep_cell_text(statutes_cell.text)
                             
                     #get indices for Definitions and Requirements
@@ -557,6 +563,7 @@ def parse_tables(doc, details, record_data, object_type):
                     definitions = []
                     requirements = []
                     regulations = []
+                    found_regs = False
 
                     for index, item in enumerate(statutes):
                         if any(item.startswith(phrase) for phrase in ['Definitions related to', 'Definitions for ']):
@@ -566,6 +573,8 @@ def parse_tables(doc, details, record_data, object_type):
                     for index, item in enumerate(statutes):
                         if any(item.startswith(phrase) for phrase in ['Requirements related to', 'Requirements for ', 'Regulations regarding ']):
                             req_index = index
+                            if "Regulations" in statutes[index]:
+                                found_regs = True
                             break
 
                     # we may not have definitions; make sure we found them
@@ -607,6 +616,7 @@ def parse_tables(doc, details, record_data, object_type):
                                 print('\tDEFINITION:', defn)
                             definitions.append(temp_defn_dict)
 
+
                     # add definitions info to article dict; if none have been found, we just have an empty list
                     temp_article_dict['definitions'] = definitions
 
@@ -626,7 +636,7 @@ def parse_tables(doc, details, record_data, object_type):
 
                         # parse out requirements and add to temp dict; note tht we need to differentiate between 'regulations' and 'requirements'
                         if found_regs:
-                            regulations = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
+                            regulations = parse_requirement_blocks(req_info, statutes_cell, regulations, details, current_position)
                             temp_article_dict['regulations'] = regulations
                         else:
                             requirements = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
@@ -912,17 +922,10 @@ def check_all_hyperlinks_from_docx(doc, xml_file):
                                 # Combine text elements (handling irregular text breaks)
                                 full_text = ''.join([text.text for text in text_elements if text.text])
 
-                                #get cell context
-                                cell_context = [line for line in cell.text.splitlines() if full_text in line]
-
                                 #now save info 
                                 if not missing_docx_hyperlinks.get(full_target):
                                     missing_docx_hyperlinks[full_target] = []
-
-                                info = { "text": full_text, "table_info": f"Table: {t_i} Row: {r_i} Cell: {c_i}", "context": cell_context}
-
-                                if info not in missing_docx_hyperlinks[full_target]:
-                                    missing_docx_hyperlinks[full_target].append(info)
+                                missing_docx_hyperlinks[full_target].append(full_text)
 
                 # Check for HYPERLINK fields in <w:p> elements
                 paragraphs = cell_xml.findall('.//w:p', namespaces={'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'})
@@ -950,27 +953,18 @@ def check_all_hyperlinks_from_docx(doc, xml_file):
                                 text_elements = paragraph.findall('.//w:t', namespaces={'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'})
                                 paragraph_text = ''.join([text.text.strip() for text in text_elements if text.text])
 
-                                #get cell context
-                                cell_context = [line for line in cell.text.splitlines() if paragraph_text in line]
-
                                 #now save info 
                                 if not missing_docx_hyperlinks.get(hyperlink_url):
                                     missing_docx_hyperlinks[hyperlink_url] = []
-
-                                info = { "text": paragraph_text, "table_info": f"Table: {t_i} Row: {r_i} Cell: {c_i}", "context": cell_context}
-
-                                if info not in missing_docx_hyperlinks[hyperlink_url]:
-                                    missing_docx_hyperlinks[hyperlink_url].append(info)
+                                missing_docx_hyperlinks[hyperlink_url].append(paragraph_text)
 
     # If there are missing hyperlinks, print them
     if missing_docx_hyperlinks:
         print(f"\n\nFound {len(missing_docx_hyperlinks)} hyperlinks in DOCX that are not in the XML:")
-        for url, info in missing_docx_hyperlinks.items():
+        for url, text in missing_docx_hyperlinks.items():
             print(f"\n\nURL: {url}") 
-            # for entry in info:  # Each `entry` is a dictionary in the list
-            #     print(f'\n\tTABLE: {entry["table_info"]}')
-            #     print(f'\n\tTEXT: {entry["text"]}')
-            #     print(f'\n\tCONTEXT: {entry["context"]}')
+            for t in text:  
+                print(f'\tTEXT: {t}')
 
 def main(details):
     
@@ -1026,10 +1020,8 @@ if __name__ == "__main__":
     # check for config file; get the directory where the current script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Construct the path to the config file
+    # Construct the path to the config file; make sure it exists
     config_path = os.path.join(script_dir, 'acf_parse_config.json')
-
-    # Check if the config file exists in the script's directory
     if os.path.exists(config_path):
         print("\n\nConfig file found.")
     else:
@@ -1040,20 +1032,15 @@ if __name__ == "__main__":
     with open(config_path, 'r') as file:
         details = json.load(file)
 
-    # make sure essential info is included: input_doc, out_dir, titleName, articleName, and state
-    missing_details = []
-    for key in ["input_doc", "out_dir", "xsd_file", "titleName", "articleName", "state"]:
-        if not details[key]:
-            missing_details.append[key]
-    if missing_details:
-        print(f"\n\nThe following config fields need to be completed: {' '.join(missing_details)}")
-        sys.exit(1)
+    # make sure XSD and XSL files have right paths
+    details['xsd_file'] = os.path.join(script_dir, details['xsd_file'])
+    details['xsl_file'] = os.path.join(script_dir, details['xsl_file'])
 
-    # make sure input_doc and out_dir exist
+    # make sure files/folders actually exist
     bad_path = False
-    for key in ["input_doc", "out_dir", "xsd_file"]:
+    for key in ["input_doc", "out_dir", "xsd_file", "xsl_file"]:
         if not os.path.exists(details[key]):
-            print(f'\n\n{key} does not exist! Verify path and update config file')
+            print(f'\n\n{details[key]} does not exist! Verify path and update config file')
             bad_path = True 
     if bad_path:
         sys.exit(1)
@@ -1078,12 +1065,13 @@ if __name__ == "__main__":
             print(f'\n\nThe "{term}" config entry is missing!')
             sys.exit(1)
 
-    #make sure we have a state_code regex pattern
-    if not details["state_code_pattern"]:
-        print('\n\nAdd a state_code_pattern!')
-        sys.exit(1)
+    #make sure we have regex patterns
+    for regex in ["statute_pattern", "state_code_pattern"]:
+        if not details[regex]:
+            print(f'\n\nMissing the {regex} regex!')
+            sys.exit(1)
 
-    # the 'partName' field must be a list, to accommodate variations
+    # the 'partName' field must be a list, to accommodate variations among records
     if not isinstance(details.get('partName'), list):
         print('\n\nThe "partName" value must be a list!')
         sys.exit(1)
