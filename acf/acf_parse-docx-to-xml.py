@@ -121,7 +121,7 @@ def write_error(details, error_msg):
 def prep_cell_text(raw_txt):
 
     #clean string--remove curly quotes and zero-width spaces
-    txt_step_1 = raw_txt.replace('’', "'").replace('“', '"').replace('”', '"').replace('\u200b', '').replace("\u2009", " ")
+    txt_step_1 = raw_txt.replace('’', "'").replace('“', '"').replace('”', '"').replace('\u200b', '').replace("\u2009", " ").replace('•', '')
 
     #split into list of strings, trim white space from each string
     txt_step_2 = [item.strip() for item in txt_step_1.splitlines()]
@@ -275,10 +275,14 @@ def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
         current_position = f"{parent_position} - {state_code}"
 
         # Parse entities (as a list)
-        entities_match = entities_pattern.match(data_slice[1])
-        if entities_match:
-            entities_text = entities_match.group(1)
-            record['entities'] = [entity.strip() for entity in entities_text.split(";")]
+        try:
+            entities_match = entities_pattern.match(data_slice[1])
+            if entities_match:
+                entities_text = entities_match.group(1)
+                record['entities'] = [entity.strip() for entity in entities_text.split(";")]
+        except IndexError:
+            print(data_slice)
+            sys.exit(1)
         
         # Parse tags (as a list)
         tags_match = tags_pattern.match(data_slice[2])
@@ -314,16 +318,25 @@ def parse_to_dict(list_of_strings, cell, search_term):
 
             # if found, assign values to dictionary
             temp_dict = {
-                "current_position": t,
-                "number": t.split(' ', 1)[1].strip(),
+                "current_position": t.strip(),
                 "name": list_of_strings[t_idx+1],
                 "source": find_source_link(cell, list_of_strings[t_idx+1], t),
                 "start_idx": t_idx,
                 "end_idx": t_idx+1
             }
 
-            # we also need to get a form of the name to use as a dict key. Just do this for everything, but it's only used with Titles
-            temp_dict['title_key'] = f"{temp_dict["current_position"]}-{temp_dict["name"]}".replace(' ', '').lower()
+            # NOTE: we have at least one state that does not include Title #'s. Add handling for this...
+            try:
+                temp_dict['number'] = t.split(' ', 1)[1].strip()
+            except IndexError:
+                temp_dict['number'] = None
+
+            # we also need to get a form of the name to use as a dict key. Just do this for everything, but it's only used with Titles. We have to take additional steps in case this state doesn't include Title Numbers
+            if temp_dict['current_position'].lower() == search_term[0].lower():
+                temp_dict['current_position'] = f"{temp_dict['current_position']} {temp_dict['name']}"
+                temp_dict['title_key'] = temp_dict["current_position"]
+            else:
+                temp_dict['title_key'] = f"{temp_dict["current_position"]}-{temp_dict["name"]}".replace(' ', '').lower()
 
             #note that if this record uses multiple 'Part' names, we have to see if the altName (i.e., the second partName) is used
             if len(search_term) > 1:
@@ -571,7 +584,7 @@ def parse_tables(doc, details, record_data, object_type):
                             break
 
                     for index, item in enumerate(statutes):
-                        if any(item.startswith(phrase) for phrase in ['Requirements related to', 'Requirements for ', 'Regulations regarding ']):
+                        if any(item.startswith(phrase) for phrase in ['Requirements related ', 'Requirements for ', 'Regulations regarding ']):
                             req_index = index
                             if "Regulations" in statutes[index]:
                                 found_regs = True

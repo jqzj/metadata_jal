@@ -6,7 +6,7 @@ Modifications of ICPSR's metadata follow a four-step governance process:
 
 1. **Evaluate**: Using this documentation portal, an ICPSR team member evaluates the existing metadata properties to determine if the existing schema will meet their project needs.
 
-2. **Request**: If existing metadata do not meet the project's needs, the ICPSR team member should email the [Metadata & Preservation team](mailto:icpsr-metadata@umich.edu) and submit a metadata change request. To do so, make a copy of the [Metadata Change Request Spreadsheet](https://docs.google.com/spreadsheets/d/1lXMFKpQchPqNA4_Km3aEjaKiiDvgf2OarXlT-u7YOKs/copy) and provide the following information for each element:
+2. **Request**: If existing metadata do not meet the project's needs, the ICPSR team member should email the Metadata & Preservation team at 'icpsr-metadata [at] umich [dot] edu' and submit a metadata change request spreadsheet. To do so, make a copy of the [Metadata Change Request Spreadsheet](https://docs.google.com/spreadsheets/d/1lXMFKpQchPqNA4_Km3aEjaKiiDvgf2OarXlT-u7YOKs/copy) and provide the following information for each element:
 
     * **Reason for the Change:**: Use this column to provide an explanation or justification of why the metadata change is needed.
     * **Metadata Element Name**: Use this column to provide the name of each metadata element in the change request. If you propose a new metadata element, the Metadata & Preservation Team may suggest an alternate name for clarity or consistency.
