@@ -272,7 +272,11 @@ def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
             print(f'\nERROR: unable to parse this content: {data_slice[0]}')
 
         #update current position
-        current_position = f"{parent_position} - {state_code}"
+        try:
+            current_position = f"{parent_position} - {state_code}"
+        except UnboundLocalError:
+            print(data_slice)
+            sys.exit(1)
 
         # Parse entities (as a list)
         try:
