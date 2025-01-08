@@ -26,13 +26,9 @@ The current version of DCAT-US only permits a single value for the [spatial](htt
 
 ### Time Period: Dates
 
-**Dublin Core and MARCXML Date Expressions**  
+**Dublin Core and MARCXML Date Expressions:** While ICPSR's [Time Period](https://icpsr.github.io/metadata/icpsr_study_schema/#18-time-period) element is repeatable, not all metadata standards permit multiple date elements or allow structured descriptive text to contextualize multiple date values. To better align with the Dublin Core and MARCXML standards and simplify the presentation of time period information, ICPSR will collapse multiple time periods into a single date range representing the earliest and latest dates to which the data refer.
 
-While ICPSR's [Time Period](https://icpsr.github.io/metadata/icpsr_study_schema/#18-time-period) element is repeatable, not all metadata standards permit multiple date elements or allow structured descriptive text to contextualize multiple date values. To better align with the Dublin Core and MARCXML standards and simplify the presentation of time period information, ICPSR will collapse multiple time periods into a single date range representing the earliest and latest dates to which the data refer.
-
-**DCAT-US Date Expressions**  
-
-The current version of DCAT-US only permits a single value for the [temporal](https://resources.data.gov/resources/dcat-us/#temporal) metadata element. In cases where a study has multiple Time Period entries, ICPSR will collapse them into a single date range (representing the earliest and latest dates to which the data refer) and use that value for the 'temporal' property. Each individual Time Period entry will then be added to an array in the 'temporalExt' property, an ICPSR-specific extension of the the base DCAT-US schema.
+**DCAT-US Date Expressions:** The current version of DCAT-US only permits a single value for the [temporal](https://resources.data.gov/resources/dcat-us/#temporal) metadata element. In cases where a study has multiple Time Period entries, ICPSR will collapse them into a single date range (representing the earliest and latest dates to which the data refer) and use that value for the 'temporal' property. Each individual Time Period entry will then be added to an array in the 'temporalExt' property, an ICPSR-specific extension of the the base DCAT-US schema.
 
 ### Restrictions
 
