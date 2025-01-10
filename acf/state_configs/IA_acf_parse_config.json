@@ -1,6 +1,6 @@
 {
-   "input_doc": "C:/ACF/FINAL APPROVED STATE RECORDS/Navajo/Navajo Nation_Copy.docx",
-    "out_dir": "C:/ACF/FINAL APPROVED STATE RECORDS/Navajo",
+    "input_doc": "C:/ACF/FINAL APPROVED STATE RECORDS/Iowa/Iowa_Copy.docx",
+    "out_dir": "C:/ACF/FINAL APPROVED STATE RECORDS/Iowa",
     "xsd_file": "schema_final.xsd",
     "xsl_file": "statetemplatev5.xsl",
     "category": "false",
@@ -10,9 +10,9 @@
     "partName": [],
     "subPartName": "",
     "titleContent": "false",
-    "state": "Navajo Nation",
-    "state_code_pattern": "^(.+?)\\s?\\u2013\\s?(.*?)\\s?\\(?(\\d+\\sN\\.N\\.C\\.\\s\\u00A7\\s\\d+),\\sp\\.\\d+\\)?$",
-    "statute_pattern": "^(\\d+\\sN\\.N\\.C\\.\\s\\u00A7\\s\\d+),\\sp\\.\\d+\\s+[-\\u2013\\u2014]\\s+(.*)$",
+    "state": "Iowa",
+    "state_code_pattern": "^(.+?)\\s?\\u2013\\s?(.*?)\\s?\\(?(IA\\sCode\\s\\u00A7\\s[\\w\\.]+)\\)?$",
+    "statute_pattern": "^(IA\\sCode\\s\\u00A7\\s[\\w\\.]+)\\s+[-\\u2013\\u2014]\\s+(.*)$",
     "patterns": {
         "base": "(.+)\\s?\\u2013\\s?(.*)\\s+",
         "Alabama": "^(.+?)\\s?\\u2013\\s?(.*?)\\s?\\(?(AL\\sCode\\s\\u00A7\\s[-\\w\\.]+)\\)?$",
