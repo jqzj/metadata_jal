@@ -33,7 +33,7 @@ def find_source_link(cell, target_text, preceding_target_text=None):
         text_elements = paragraph.findall('.//w:t', namespaces={'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'})
 
         # Concatenate text from all <w:t> elements and clean it
-        paragraph_text = ''.join([t.text.strip().replace(' ', '').replace('(', '').replace(')', '').replace("’", "'").lower() for t in text_elements if t.text])
+        paragraph_text = ''.join([t.text.strip().replace(' ', '').replace('(', '').replace(')', '').replace('\u200b', '').replace("\u2009", "").replace("’", "'").lower() for t in text_elements if t.text])
 
         # Check for preceding target text if needed
         if preceding_target_text and not preceding_text_found:
@@ -48,7 +48,7 @@ def find_source_link(cell, target_text, preceding_target_text=None):
             for hyperlink in hyperlinks:
                 # Extract all <w:t> elements in the hyperlink
                 link_text_elements = hyperlink.findall('.//w:t', namespaces={'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'})
-                full_text = ''.join([t.text.strip().replace(' ', '').replace("’", "'").replace('(', '').replace(')', '').lower() for t in link_text_elements if t.text])
+                full_text = ''.join([t.text.strip().replace(' ', '').replace('\u200b', '').replace("\u2009", "").replace("’", "'").replace('(', '').replace(')', '').lower() for t in link_text_elements if t.text])
 
                 # Match the full hyperlink text with target_text
                 if target_text == full_text:
@@ -544,8 +544,13 @@ def parse_tables(doc, details, record_data, object_type):
                         if len(part_slice) > 0:
                             temp_article_dict['part'] = parse_to_dict(part_slice, overview_cell, details['partName'])
 
-                            if temp_article_dict['part']['current_position'] not in current_position:
-                                current_position += f" - {temp_article_dict['part']['current_position']}"
+                            #NOTE: we sometimes have issues with the parsing; exit if we have an error so that we can figure out the issue
+                            try:
+                                if temp_article_dict['part']['current_position'] not in current_position:
+                                    current_position += f" - {temp_article_dict['part']['current_position']}"
+                            except TypeError:
+                                print(part_slice)
+                                sys.exit(1)
 
                             # we will only have a sub-part if there is a part
                             if details['subPartName']:
@@ -1067,6 +1072,8 @@ if __name__ == "__main__":
     if os.path.exists(details['tmp_audit_log']):
         os.remove(details['tmp_audit_log'])
     details["audit_log"] = os.path.join(details['out_dir'], f'{details['state'].lower().replace(' ', '_')}_audit-log.txt')
+    if os.path.exists(details['audit_log']):
+        os.remove(details['audit_log'])
 
     # make sure boolean values are set
     for term in ["category", "titleContent"]:            
