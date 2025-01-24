@@ -6,6 +6,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 import re
 import csv
+import sys
+import os
 
 # this function retrieves ICPSR DOIs that are currently in DataCite
 def get_dois_in_datacite(prefix, base_url, header, authorization):
@@ -59,8 +61,8 @@ def get_existing_related_items(doi, url, header, authorization):
 def main():
 
     # set variables
-    input_file = 'bib-dois-0125.xlsx'
-    output_file = 'updated_dois.csv'
+    input_file = 'C:/icpsr_github/metadata/datacite/bib-dois-0724.xlsx'
+    output_file = 'C:/icpsr_github/metadata/datacite/updated_dois.csv'
     search_prefix = "10.81037"
     label_mapping = {
         'JOUR': 'JournalArticle',
@@ -76,6 +78,11 @@ def main():
         'ELEC': 'Other',
         'MANSCPT': 'Preprint'
     }
+
+    #make sure our input file actually exists
+    if not os.path.exists(input_file):
+        print(f"{input_file} does not exist; check path and run script again")
+        sys.exit(1)
 
     # load the spreadsheet
     df = pd.read_excel(input_file)
@@ -133,7 +140,7 @@ def main():
         if icpsr_doi not in icpsr_dois_in_datacite:
             continue
         
-        print('\nWorking on', icpsr_doi)
+        print(f'\nWorking on {icpsr_doi}\n')
 
         # create the URL for our API call; then use it to get any relatedIdentifiers currently in DataCite
         url = f"{base_url}/{icpsr_doi}"
@@ -159,7 +166,7 @@ def main():
 
         # if we don't have any new info to write, skip to the next study
         if all_related_pubs == current_datacite_relatedIdentifiers:
-            print('\tNo new pubs to add; moving on to next item...')
+            print('\tNo new pubs to add; moving on to next item...\n')
             continue
 
         #track how many pubs we will be adding
@@ -181,16 +188,16 @@ def main():
         
         # # document the status of request; '200' code is success
         if response.status_code == 200:
-            print(f"Successfully updated DOI {icpsr_doi}")
+            print(f"\tSuccessfully updated DOI {icpsr_doi}")
 
             # note statistics in our tracking dict
             updated_dois[icpsr_doi] = {
-                "current": len(current_datacite_relatedIdentifiers)
+                "current": len(current_datacite_relatedIdentifiers),
                 "updated": updated_pubs,
                 "total": len(all_related_pubs)
             }
         else:
-            print(f"Failed to update DOI {icpsr_doi}: {response.status_code} {response.text}") 
+            print(f"\tFailed to update DOI {icpsr_doi}: {response.status_code} {response.text}") 
 
     print(f"\n\nTotal DOIs updated: {len(updated_dois)}")
     print(f"Total pubs added: {running_count}")
