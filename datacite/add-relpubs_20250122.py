@@ -60,10 +60,28 @@ def get_existing_related_items(doi, url, header, authorization):
 
 def main():
 
+    # set API variables based on whether we are working with test or prod
+    try: 
+        if sys.argv[1].lower() == 'test':
+            base_url = "https://api.test.datacite.org/dois"
+            search_prefix = "10.81037"
+            username = "ICPSR.PFKTGI"
+            api_key = "88Yzq-tVgJE-SGMG2-zXNBs-kW9dc-dqzML-eEFBL"
+        elif sys.argv[1].lower() == 'prod':
+            base_url = "https://api.datacite.org/dois",
+            search_prefix = "10.3886",
+            username = "GESIS.ICPSR",
+            api_key = "3LJGa-BZ6Km-UwgxH-CQo8Q-xYSmv-rRpzK-z7e4F"
+        else:
+            print('\n\nWARNING: script only accepts "prod" or "test" as first argument.')
+            sys.exit(1)
+    except IndexError:
+        print('\n\nUsage: python add-relpubs.py <prod OR test>')
+        sys.exit(1)     
+            
     # set variables
     input_file = 'C:/icpsr_github/metadata/datacite/bib-dois-0724.xlsx'
     output_file = 'C:/icpsr_github/metadata/datacite/updated_dois.csv'
-    search_prefix = "10.81037"
     label_mapping = {
         'JOUR': 'JournalArticle',
         'CHAP': 'BookChapter',
@@ -99,8 +117,11 @@ def main():
         #split up study numbers; strip any white space and pad to 5 digits
         for study_num in str(row['STUD_NUMS']).split(';'):
             study_num = study_num.strip()
-            if len(study_num) == 4:
+
+            # make sure we account for any study number less than 5
+            while len(study_num) < 5:
                 study_num = '0' + study_num
+                
             full_doi = f"{search_prefix}/icpsr{study_num}"
 
             # check to see if our dict already has this DOI; if not, add it, with an empty list as the value
@@ -117,10 +138,6 @@ def main():
             icpsr_doi_dict[full_doi].append(rel_pub_info)
 
     # Now that we have all of our local citations in a dict, we will see what citataions datacite knows about
-    # Declare DataCite API variables 
-    base_url = "https://api.test.datacite.org/dois" 
-    username = "ICPSR.PFKTGI"
-    api_key = "88Yzq-tVgJE-SGMG2-zXNBs-kW9dc-dqzML-eEFBL"
     authorization = HTTPBasicAuth(username, api_key)
     header = {
         "content-type": "application/json",
