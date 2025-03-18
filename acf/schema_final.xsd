@@ -37,8 +37,9 @@
   <xs:element name="altSource" type="xs:string"/>
   
   <xs:simpleType name="source_type">
-    <xs:restriction base="xs:anyURI">
+    <xs:restriction base="xs:string">
       <xs:minLength value="2"/> <!-- Requires at least 1 character -->
+      <xs:pattern value="https?://.*"/>
     </xs:restriction>
   </xs:simpleType>
   
