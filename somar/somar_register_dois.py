@@ -59,6 +59,8 @@ elif 'DOI' not in somar.columns:
 
 if 'Result' not in somar.columns:
     somar['Result'] = pd.Series(dtype='object')
+else:
+    somar['Result'] = somar['Result'].astype("string")
 
 #Additional vars: an empty list for suffixes and an index counter, set to 0 
 new_doi_suffixes = []
@@ -122,7 +124,7 @@ for index, row in somar.iterrows():
     else:
         print(f'\t  - DOI failed; code {response.status_code}')
         print(f'\t  - {response.json()}')
-        somar.loc[index, 'Result'] = 'Failure'
+        somar.loc[index, 'Result'] = str('Failure')
         continue
 
     # proceed to update the metadata for our new DataCite object
@@ -172,11 +174,11 @@ for index, row in somar.iterrows():
     #Response code should be 200; document outcome in dataframe
     if str(response.status_code) == "200":
         print('\t  - Metadata update succeeded!')
-        somar.loc[index, 'Result'] = "Success"
+        somar.loc[index, 'Result'] = str("Success")
     else:
         print(f'\t  - Metadata update failed; code {response.status_code}')
         print(f'\t  - {response.json()}')
-        somar.loc[index, 'Result'] = 'Failure'
+        somar.loc[index, 'Result'] = str('Failure')
         continue
 
 #Save the dataframe as a csv, for easiest copy/pasting into the google sheet. MAKE SURE TO KEEP THIS, YOU WILL NEED IT WHEN YOU UPDATE.

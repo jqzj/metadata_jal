@@ -10,8 +10,8 @@
     "partName": "",
     "subPartName": "",
     "state": "Ohio",
-    "state_code_pattern": "(.+?)\\s?\\u2013\\s?(.*?)\\s+\\(?(Ohio Rev Code\\s\u00A7\\s+\\d+(?:\\.\\d*)?)\\)?$",
-    "statute_pattern": "^(Ohio Rev Code\\s\u00A7\\s+\\d+(?:\\.\\d*)?)\\s+[\u2013\u2014]\\s+(.*)",
+    "state_code_pattern": "(.+?)\\s?\\u2013\\s?(.*?)\\s+\\(?(Ohio\\sRev\\sCode\\s\u00A7\\s+\\d+(?:\\.\\d*)?)\\)?$",
+    "statute_pattern": "^(Ohio\\sRev\\sCode\\s\u00A7\\s+\\d+(?:\\.\\d*)?)\\s+[\u2013\u2014]\\s+(.*)",
     "patterns": {
         "base": "(.+)\\s?\\u2013\\s?(.*)\\s+",
         "Idaho": "(.+)\\s?\\u2013\\s?(.*)\\s+\\(?(I\\.C\\. Stat\\s.+\\d+[A-Za-z]*)\\)?$",
