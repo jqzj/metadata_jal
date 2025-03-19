@@ -3,16 +3,18 @@
 ## Under Development: A New API to Export Metadata!
 
 ICPSR is developing a new application programming interface (API) so that community members can perform bulk exports of metadata records. This new API will:
- - Simplify and standardize the process of accessing metadata records.
- - Allow ICPSR to provide metadata in a broader range of standards and formats.
- - Support more complex queries so that users can find the metadata records that best meet their needs.
+
+  - Simplify and standardize the process of accessing metadata records.
+  - Allow ICPSR to provide metadata in a broader range of standards and formats.
+  - Support more complex queries so that users can find the metadata records that best meet their needs.
 
 ## ICPSR Metadata API Mappings
 
 Upon its release, the ICPSR Metadata API will produce records that conform to the following standards (with more to come in the future): 
- - [DCAT-US](https://resources.data.gov/resources/dcat-us/)
- - [MARCXML](https://www.loc.gov/standards/marcxml/)
- - [Dublin Core](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/). 
+
+  - [DCAT-US](https://resources.data.gov/resources/dcat-us/): a U.S. government extension of the Data Catalog Vocabulary (DCAT), designed to improve the discoverability and interoperability of federal open data. It provides a standardized way to describe datasets, data services, and distributions using RDF-based metadata, ensuring consistency across data catalogs like data.gov. This standard aligns with international best practices while incorporating specific requirements for U.S. government data publishing.
+  - [MARCXML](https://www.loc.gov/standards/marcxml/): an XML-based representation of the MARC (Machine-Readable Cataloging) standard, developed by the Library of Congress for bibliographic and authority data. It preserves the structure and semantics of MARC records while enabling interoperability with modern XML-based systems. This format allows libraries and archives to exchange, transform, and integrate catalog data more easily with digital repositories and web technologies.
+  - [Dublin Core](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/): a simple yet flexible schema for describing digital and physical resources, widely used for interoperability across different information systems. Designed to enhance resource discovery and metadata sharing, Dublin Core is commonly used in libraries, data repositories, and web-based metadata applications. 
 
 This [Metadata API Mappings](https://docs.google.com/spreadsheets/d/1Avw212FfzxRjsUFvlJOLtsJclKeL8VJc0pbhLQevXg8/edit?usp=sharing) spreadsheet provides more information about how ICPSR metadata elements align with the above-mentioned standards. 
 
