@@ -9,6 +9,63 @@ import pickle
 import json
 from collections import defaultdict
 import urllib.parse
+import requests
+import csv
+import pandas as pd
+
+def is_url_valid(url: str) -> bool:
+    """
+    Check if a URL resolves successfully (status code 200).
+    
+    Args:
+        url (str): The URL to test.
+    
+    Returns:
+        bool: True if the URL resolves successfully, False otherwise.
+    """
+    try:
+        response = requests.get(url, timeout=10)  # 10-second timeout
+        # Return True for 200 status, False otherwise
+        return response.status_code == 200
+    except requests.RequestException:
+        # Handle network errors, timeouts, etc.
+        return False
+
+def get_good_link(bad_link):
+    """
+    Looks up the corresponding 'Good link' for a given 'Bad link' in an Excel spreadsheet.
+
+    Parameters:
+    - bad_link (str): The broken link to look up.
+    - excel_file_path (str): Path to the Excel file containing 'Bad link' and 'Good link' columns.
+
+    Returns:
+    - str: The corresponding 'Good link' if found, otherwise None.
+    """
+
+    excel_file_path = 'C:/ACF/bad_links.xlsx'
+
+    try:
+        # Load Excel file
+        df = pd.read_excel(excel_file_path, engine='openpyxl')
+        
+        # Ensure the required columns are present
+        if 'Bad Link' not in df.columns or 'Good Link' not in df.columns:
+            print("Error: Excel file must contain 'Bad link' and 'Good link' columns.")
+            return None
+
+        # Search for the bad link and return the corresponding good link
+        match = df.loc[df['Bad Link'] == bad_link, 'Good Link']
+
+        if not match.empty:
+            return match.values[0]  # Return the first match
+        else:
+            print(f"We do not have a good link for: {bad_link}")
+            return None
+
+    except Exception as e:
+        print(f"Good Link lookup error occurred: {e}")
+        return None
 
 def find_source_link(cell, target_text, preceding_target_text=None):
     # Get the XML for the cell
@@ -63,6 +120,12 @@ def find_source_link(cell, target_text, preceding_target_text=None):
                             full_target = rel._target
                             if anchor:
                                 full_target += f"#{anchor}"  # Append anchor if present
+                            
+                            link_check = is_url_valid(full_target)
+                            if not link_check:
+                                full_target = get_good_link(full_target)
+                            #     write_bad_links(full_target, target_text)
+
                             return full_target
 
     # OPTION 2: LINKS ARE STORED IN <w:instrText> TAGS, NESTED INSIDE <p> tags alongside text
@@ -91,6 +154,11 @@ def find_source_link(cell, target_text, preceding_target_text=None):
                                     anchor_text = anchor_text[1:-1]  # Remove surrounding quotes
                                 hyperlink_url += f"#{anchor_text}"
 
+                        link_check = is_url_valid(hyperlink_url)
+                        if not link_check:
+                            hyperlink_url = get_good_link(hyperlink_url)
+                        #     write_bad_links(hyperlink_url, target_text)
+                        
                         return hyperlink_url
             
 
@@ -117,6 +185,13 @@ def write_error(details, error_msg):
 
     with open(details['tmp_audit_log'], 'a', encoding='utf-8') as fo:
         fo.write(f"{error_msg}\n") 
+
+def write_bad_links(url, link_text):
+    bad_link_log = "C:/ACF/bad_link_log.csv"
+
+    with open(bad_link_log, mode='a', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow([url, link_text])
 
 def prep_cell_text(raw_txt):
 
@@ -293,6 +368,7 @@ def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
         if tags_match:
             tags_text = tags_match.group(1)
         else:
+            #print(data_slice)
             tags_text = data_slice[2].split(':', 1)[1]
 
         # check our terms and assign to dict
@@ -401,8 +477,7 @@ def parse_tables(doc, details, record_data, object_type):
                     #some rows will actually have more than 3 cells: need to verify where indexes will start
                     if len(row.cells) > 3:
                         title_idx = return_index(row.cells, details['titleName'])
-                        office_idx = return_index(row.cells, 'ACF Offices Associated')
-                        
+                        office_idx = return_index(row.cells, 'ACF Offices Associated')              
                     else:
                         title_idx = 1
                         office_idx = 2 
@@ -492,7 +567,10 @@ def parse_tables(doc, details, record_data, object_type):
                     record_data[current_title_key].setdefault('articles', [])
 
                     # get article info
-                    temp_article_dict = parse_to_dict(article_overview, overview_cell, details['articleName'])
+                    if details['articleName']:
+                        temp_article_dict = parse_to_dict(article_overview, overview_cell, details['articleName'])
+                    else:
+                        temp_article_dict = None
 
                     # Provide warning if we didn't get an article; continue on to next item
                     if temp_article_dict is None:
@@ -584,8 +662,6 @@ def parse_tables(doc, details, record_data, object_type):
                     # set up lists to carry definition and requirement information
                     definitions = []
                     requirements = []
-                    regulations = []
-                    found_regs = False
 
                     for index, item in enumerate(statutes):
                         if any(item.lower().startswith(phrase) for phrase in ['definitions related to', 'definitions for ']):
@@ -593,10 +669,11 @@ def parse_tables(doc, details, record_data, object_type):
                             break
 
                     for index, item in enumerate(statutes):
-                        if any(item.lower().startswith(phrase) for phrase in ['requirements related ', 'requirements for ', 'Regulations regarding ']):
+                        if any(item.lower().startswith(phrase) for phrase in ['requirements related ', 'requirements for ', 'requirements regarding ', 'regulations regarding ']):
                             req_index = index
+                            # NOTE: we need to edit Word doc to replace 'Regulations' with 'Requirements'; give a warning if so
                             if "Regulations" in statutes[index]:
-                                found_regs = True
+                                print(f'\n\nWARNING: Found REGULATION at {current_position}')
                             break
 
                     # we may not have definitions; make sure we found them
@@ -656,13 +733,9 @@ def parse_tables(doc, details, record_data, object_type):
                         # slice our original list to include all the statute information
                         req_info = statutes[check_index:]
 
-                        # parse out requirements and add to temp dict; note tht we need to differentiate between 'regulations' and 'requirements'
-                        if found_regs:
-                            regulations = parse_requirement_blocks(req_info, statutes_cell, regulations, details, current_position)
-                            temp_article_dict['regulations'] = regulations
-                        else:
-                            requirements = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
-                            temp_article_dict['requirements'] = requirements
+                        # parse out requirements and add to temp dict
+                        requirements = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
+                        temp_article_dict['requirements'] = requirements
 
                     if temp_article_dict not in record_data[current_title_key]['articles']:
                         record_data[current_title_key]['articles'].append(temp_article_dict)
@@ -831,25 +904,25 @@ def write_xml(details, record_data):
                         etree.SubElement(terms_elem, "term").text = tag.replace('&amp;', '&')
 
             #add regulations, if present
-            if article.get("regulations", []):
-                reg_elem = etree.SubElement(article_elem, "regulations")
-                for reg in article.get("regulations", []):
-                    reg_statute_elem = etree.SubElement(reg_elem, "statute")
-                    etree.SubElement(reg_statute_elem, "label").text = reg.get("label", '')
-                    etree.SubElement(reg_statute_elem, "description").text = reg.get("description", '')
-                    etree.SubElement(reg_statute_elem, "stateCode").text = reg.get("state_code", '')
-                    etree.SubElement(reg_statute_elem, "source").text = reg.get("source")
+            # if article.get("regulations", []):
+            #     reg_elem = etree.SubElement(article_elem, "regulations")
+            #     for reg in article.get("regulations", []):
+            #         reg_statute_elem = etree.SubElement(reg_elem, "statute")
+            #         etree.SubElement(reg_statute_elem, "label").text = reg.get("label", '')
+            #         etree.SubElement(reg_statute_elem, "description").text = reg.get("description", '')
+            #         etree.SubElement(reg_statute_elem, "stateCode").text = reg.get("state_code", '')
+            #         etree.SubElement(reg_statute_elem, "source").text = reg.get("source")
 
-                    # Add appliesTo entities
-                    applies_elem = etree.SubElement(reg_statute_elem, "appliesTo")
-                    for ent in reg.get("entities", ['']):
-                        etree.SubElement(applies_elem, "entity").text = ent
+            #         # Add appliesTo entities
+            #         applies_elem = etree.SubElement(reg_statute_elem, "appliesTo")
+            #         for ent in reg.get("entities", ['']):
+            #             etree.SubElement(applies_elem, "entity").text = ent
 
-                    # Add terms tags
-                    terms_elem = etree.SubElement(reg_statute_elem, "terms")
-                    for tag in reg.get("tags", []):
-                        #watch out for lxml double-escaping ampersands...
-                        etree.SubElement(terms_elem, "term").text = tag.replace('&amp;', '&')
+            #         # Add terms tags
+            #         terms_elem = etree.SubElement(reg_statute_elem, "terms")
+            #         for tag in reg.get("tags", []):
+            #             #watch out for lxml double-escaping ampersands...
+            #             etree.SubElement(terms_elem, "term").text = tag.replace('&amp;', '&')
 
     # Create the ElementTree object
     tree = etree.ElementTree(root)
@@ -960,7 +1033,7 @@ def check_all_hyperlinks_from_docx(doc, xml_file):
                         # Extract the hyperlink URL from the instrText
                         parts = instr_text.text.split('"')
                         if len(parts) > 1:
-                            hyperlink_url = parts[1]
+                            hyperlink_url = parts[1].lower()
 
                             if "\\l" in instr_text.text:
                                 # Find the text following \l
@@ -968,7 +1041,7 @@ def check_all_hyperlinks_from_docx(doc, xml_file):
                                 anchor_text = instr_text.text[l_index:].strip()
                                 if anchor_text.startswith('"') and anchor_text.endswith('"'):
                                     anchor_text = anchor_text[1:-1]  # Remove surrounding quotes
-                                hyperlink_url += f"#{anchor_text}"
+                                hyperlink_url += f"#{anchor_text}".lower()
 
                             if hyperlink_url.lower() not in xml_hyperlinks:
 
@@ -981,6 +1054,20 @@ def check_all_hyperlinks_from_docx(doc, xml_file):
                                     missing_docx_hyperlinks[hyperlink_url] = []
                                 missing_docx_hyperlinks[hyperlink_url].append(paragraph_text)
 
+    #For New Jersey record, check to see if bad_links were replaced with good_links
+    # excel_path = 'C:/ACF/bad_links.xlsx'
+    # df = pd.read_excel(excel_path)
+    # bad_to_good = {k.lower(): v.lower() for k, v in zip(df['Bad Link'], df['Good Link'])}
+
+    # remove_from_list = []
+
+    # for url, text in missing_docx_hyperlinks.items():
+    #     if url in bad_to_good:
+    #         if bad_to_good[url].lower() in xml_hyperlinks:
+    #              remove_from_list.append(url)
+    # for url in remove_from_list:
+    #     del missing_docx_hyperlinks[url]
+    
     # If there are missing hyperlinks, print them
     if missing_docx_hyperlinks:
         print(f"\n\nFound {len(missing_docx_hyperlinks)} hyperlinks in DOCX that are not in the XML:")
@@ -1075,6 +1162,8 @@ if __name__ == "__main__":
     details["audit_log"] = os.path.join(details['out_dir'], f'{details['state'].lower().replace(' ', '_')}_audit-log.txt')
     if os.path.exists(details['audit_log']):
         os.remove(details['audit_log'])
+
+    details['bad_link_log'] = os.path.join(details['out_dir'], f'tmp_{details['state'].lower().replace(' ', '_')}_bad-link-log.csv')
 
     # make sure boolean values are set
     for term in ["category", "titleContent"]:            
