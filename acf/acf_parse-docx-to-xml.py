@@ -9,7 +9,6 @@ import pickle
 import json
 from collections import defaultdict
 import urllib.parse
-
 import requests
 import csv
 import pandas as pd
@@ -618,7 +617,6 @@ def parse_tables(doc, details, record_data, object_type):
                     definitions = []
                     requirements = []
                     regulations = []
-                    found_regs = False
 
                     for index, item in enumerate(statutes):
                         if any(item.lower().startswith(phrase) for phrase in ['definitions related to', 'definitions for ']):
@@ -626,10 +624,11 @@ def parse_tables(doc, details, record_data, object_type):
                             break
 
                     for index, item in enumerate(statutes):
-                        if any(item.lower().startswith(phrase) for phrase in ['requirements related ', 'requirements for ', 'Regulations regarding ']):
+                        if any(item.lower().startswith(phrase) for phrase in ['requirements related ', 'requirements for ', 'requirements regarding ', 'regulations regarding ']):
                             req_index = index
+                            # NOTE: we need to edit Word doc to replace 'Regulations' with 'Requirements'; give a warning if so
                             if "Regulations" in statutes[index]:
-                                found_regs = True
+                                print(f'\n\nWARNING: Found REGULATION at {current_position}')
                             break
 
                     # we may not have definitions; make sure we found them
@@ -689,13 +688,9 @@ def parse_tables(doc, details, record_data, object_type):
                         # slice our original list to include all the statute information
                         req_info = statutes[check_index:]
 
-                        # parse out requirements and add to temp dict; note tht we need to differentiate between 'regulations' and 'requirements'
-                        if found_regs:
-                            regulations = parse_requirement_blocks(req_info, statutes_cell, regulations, details, current_position)
-                            temp_article_dict['regulations'] = regulations
-                        else:
-                            requirements = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
-                            temp_article_dict['requirements'] = requirements
+                        # parse out requirements and add to temp dict
+                        requirements = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
+                        temp_article_dict['requirements'] = requirements
 
                     if temp_article_dict not in record_data[current_title_key]['articles']:
                         record_data[current_title_key]['articles'].append(temp_article_dict)
@@ -860,27 +855,6 @@ def write_xml(details, record_data):
                     # Add terms tags
                     terms_elem = etree.SubElement(req_statute_elem, "terms")
                     for tag in req.get("tags", []):
-                        #watch out for lxml double-escaping ampersands...
-                        etree.SubElement(terms_elem, "term").text = tag.replace('&amp;', '&')
-
-            #add regulations, if present
-            if article.get("regulations", []):
-                reg_elem = etree.SubElement(article_elem, "regulations")
-                for reg in article.get("regulations", []):
-                    reg_statute_elem = etree.SubElement(reg_elem, "statute")
-                    etree.SubElement(reg_statute_elem, "label").text = reg.get("label", '')
-                    etree.SubElement(reg_statute_elem, "description").text = reg.get("description", '')
-                    etree.SubElement(reg_statute_elem, "stateCode").text = reg.get("state_code", '')
-                    etree.SubElement(reg_statute_elem, "source").text = reg.get("source")
-
-                    # Add appliesTo entities
-                    applies_elem = etree.SubElement(reg_statute_elem, "appliesTo")
-                    for ent in reg.get("entities", ['']):
-                        etree.SubElement(applies_elem, "entity").text = ent
-
-                    # Add terms tags
-                    terms_elem = etree.SubElement(reg_statute_elem, "terms")
-                    for tag in reg.get("tags", []):
                         #watch out for lxml double-escaping ampersands...
                         etree.SubElement(terms_elem, "term").text = tag.replace('&amp;', '&')
 

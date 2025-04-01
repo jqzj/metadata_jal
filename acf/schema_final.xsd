@@ -65,7 +65,7 @@
        <xs:element ref="officesAssociated"/>
        <xs:choice>        
         <xs:element maxOccurs="unbounded" ref="article"/>
-        <xs:element ref="titleContent"/>
+        <xs:element maxOccurs="unbounded" ref="titleContent"/>
        </xs:choice>
       </xs:sequence>
     </xs:complexType>
