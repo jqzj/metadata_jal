@@ -10,6 +10,28 @@ import json
 from collections import defaultdict
 import urllib.parse
 
+import requests
+import csv
+import pandas as pd
+
+def is_url_valid(url: str) -> bool:
+    """
+    Check if a URL resolves successfully (status code 200).
+    
+    Args:
+        url (str): The URL to test.
+    
+    Returns:
+        bool: True if the URL resolves successfully, False otherwise.
+    """
+    try:
+        response = requests.get(url, timeout=10)  # 10-second timeout
+        # Return True for 200 status, False otherwise
+        return response.status_code == 200
+    except requests.RequestException:
+        # Handle network errors, timeouts, etc.
+        return False
+
 def find_source_link(cell, target_text, preceding_target_text=None):
     # Get the XML for the cell
     cell_xml = cell._element
@@ -63,6 +85,12 @@ def find_source_link(cell, target_text, preceding_target_text=None):
                             full_target = rel._target
                             if anchor:
                                 full_target += f"#{anchor}"  # Append anchor if present
+
+                            link_check = is_url_valid(full_target)
+                            if not link_check:
+                                print(f'\nFound bad link: {full_target}\n')
+                                write_bad_links(full_target, target_text)
+
                             return full_target
 
     # OPTION 2: LINKS ARE STORED IN <w:instrText> TAGS, NESTED INSIDE <p> tags alongside text
@@ -90,6 +118,11 @@ def find_source_link(cell, target_text, preceding_target_text=None):
                                 if anchor_text.startswith('"') and anchor_text.endswith('"'):
                                     anchor_text = anchor_text[1:-1]  # Remove surrounding quotes
                                 hyperlink_url += f"#{anchor_text}"
+
+                        link_check = is_url_valid(hyperlink_url)
+                        if not link_check:
+                            print(f'\nFound bad link: {hyperlink_url}\n')
+                            write_bad_links(hyperlink_url, target_text)
 
                         return hyperlink_url
             
