@@ -154,7 +154,7 @@ def write_error(details, error_msg):
 def prep_cell_text(raw_txt):
 
     #clean string--remove curly quotes and zero-width spaces
-    txt_step_1 = raw_txt.replace('’', "'").replace('“', '"').replace('”', '"').replace('\u200b', '').replace("\u2009", " ").replace('•', '')
+    txt_step_1 = raw_txt.replace('’', "'").replace('“', '"').replace('”', '"').replace('\u200b', '').replace("\u2009", " ").replace('•', '').replace('⦁', '')
 
     #split into list of strings, trim white space from each string
     txt_step_2 = [item.strip() for item in txt_step_1.splitlines()]
@@ -288,7 +288,7 @@ def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
                 
                 state_code = state_code.replace(')', '').strip()
             except ValueError:
-                print(f'\nERROR: unable to parse this content: {data_slice[0]}') 
+                print(f'\nValueError: unable to parse this content: {data_slice[0]}') 
 
         try:
             # update dict
@@ -302,7 +302,7 @@ def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
                 print("\tREQ CODE", state_code)
 
         except UnboundLocalError:
-            print(f'\nERROR: unable to parse this content: {data_slice[0]}')
+            print(f'\nUnboundLocalError: unable to parse this content: {data_slice[0]}')
 
         #update current position
         try:
@@ -621,12 +621,12 @@ def parse_tables(doc, details, record_data, object_type):
                     found_regs = False
 
                     for index, item in enumerate(statutes):
-                        if any(item.startswith(phrase) for phrase in ['Definitions related to', 'Definitions for ']):
+                        if any(item.lower().startswith(phrase) for phrase in ['definitions related to', 'definitions for ']):
                             def_index = index
                             break
 
                     for index, item in enumerate(statutes):
-                        if any(item.startswith(phrase) for phrase in ['Requirements related ', 'Requirements for ', 'Regulations regarding ']):
+                        if any(item.lower().startswith(phrase) for phrase in ['requirements related ', 'requirements for ', 'Regulations regarding ']):
                             req_index = index
                             if "Regulations" in statutes[index]:
                                 found_regs = True
@@ -697,7 +697,8 @@ def parse_tables(doc, details, record_data, object_type):
                             requirements = parse_requirement_blocks(req_info, statutes_cell, requirements, details, current_position)
                             temp_article_dict['requirements'] = requirements
 
-                    record_data[current_title_key]['articles'].append(temp_article_dict)
+                    if temp_article_dict not in record_data[current_title_key]['articles']:
+                        record_data[current_title_key]['articles'].append(temp_article_dict)
 
     return record_data[current_title_key]
 
