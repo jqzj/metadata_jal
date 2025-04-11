@@ -176,14 +176,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
-  <xs:element name="regulations">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="statute"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
    
   <xs:element name="statute">
     <xs:complexType>

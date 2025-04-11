@@ -13,61 +13,7 @@ import requests
 import csv
 import pandas as pd
 
-def is_url_valid(url: str) -> bool:
-    """
-    Check if a URL resolves successfully (status code 200).
-    
-    Args:
-        url (str): The URL to test.
-    
-    Returns:
-        bool: True if the URL resolves successfully, False otherwise.
-    """
-    try:
-        response = requests.get(url, timeout=10)  # 10-second timeout
-        # Return True for 200 status, False otherwise
-        return response.status_code == 200
-    except requests.RequestException:
-        # Handle network errors, timeouts, etc.
-        return False
-
-def get_good_link(bad_link):
-    """
-    Looks up the corresponding 'Good link' for a given 'Bad link' in an Excel spreadsheet.
-
-    Parameters:
-    - bad_link (str): The broken link to look up.
-    - excel_file_path (str): Path to the Excel file containing 'Bad link' and 'Good link' columns.
-
-    Returns:
-    - str: The corresponding 'Good link' if found, otherwise None.
-    """
-
-    excel_file_path = 'C:/ACF/bad_links.xlsx'
-
-    try:
-        # Load Excel file
-        df = pd.read_excel(excel_file_path, engine='openpyxl')
-        
-        # Ensure the required columns are present
-        if 'Bad Link' not in df.columns or 'Good Link' not in df.columns:
-            print("Error: Excel file must contain 'Bad link' and 'Good link' columns.")
-            return None
-
-        # Search for the bad link and return the corresponding good link
-        match = df.loc[df['Bad Link'] == bad_link, 'Good Link']
-
-        if not match.empty:
-            return match.values[0]  # Return the first match
-        else:
-            print(f"We do not have a good link for: {bad_link}")
-            return None
-
-    except Exception as e:
-        print(f"Good Link lookup error occurred: {e}")
-        return None
-
-def find_source_link(cell, target_text, preceding_target_text=None):
+def find_source_link(details, cell, target_text, preceding_target_text=None):
     # Get the XML for the cell
     cell_xml = cell._element
 
@@ -120,11 +66,6 @@ def find_source_link(cell, target_text, preceding_target_text=None):
                             full_target = rel._target
                             if anchor:
                                 full_target += f"#{anchor}"  # Append anchor if present
-                            
-                            link_check = is_url_valid(full_target)
-                            if not link_check:
-                                full_target = get_good_link(full_target)
-                            #     write_bad_links(full_target, target_text)
 
                             return full_target
 
@@ -154,13 +95,7 @@ def find_source_link(cell, target_text, preceding_target_text=None):
                                     anchor_text = anchor_text[1:-1]  # Remove surrounding quotes
                                 hyperlink_url += f"#{anchor_text}"
 
-                        link_check = is_url_valid(hyperlink_url)
-                        if not link_check:
-                            hyperlink_url = get_good_link(hyperlink_url)
-                        #     write_bad_links(hyperlink_url, target_text)
-                        
-                        return hyperlink_url
-            
+                        return hyperlink_url    
 
     # If no matching hyperlink was found, return empty string (no None so that we avoid string processing issues downstream)
     print(f"\n\nWARNING: Word doc does not appear to include a hyperlink for this string: {orig_text}")
@@ -185,13 +120,6 @@ def write_error(details, error_msg):
 
     with open(details['tmp_audit_log'], 'a', encoding='utf-8') as fo:
         fo.write(f"{error_msg}\n") 
-
-def write_bad_links(url, link_text):
-    bad_link_log = "C:/ACF/bad_link_log.csv"
-
-    with open(bad_link_log, mode='a', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow([url, link_text])
 
 def prep_cell_text(raw_txt):
 
@@ -337,7 +265,7 @@ def parse_requirement_blocks(data, cell, temp_list, details, parent_position):
             record['label'] = label
             record['description'] = description
             record['state_code'] = state_code
-            record['source'] = find_source_link(cell, state_code)
+            record['source'] = find_source_link(details, cell, state_code)
 
             if record['source'] is None:
                 print('\tREQ LABEL', label)
@@ -400,7 +328,7 @@ def parse_to_dict(list_of_strings, cell, search_term):
             temp_dict = {
                 "current_position": t.strip(),
                 "name": list_of_strings[t_idx+1],
-                "source": find_source_link(cell, list_of_strings[t_idx+1], t),
+                "source": find_source_link(details, cell, list_of_strings[t_idx+1], t),
                 "start_idx": t_idx,
                 "end_idx": t_idx+1
             }
@@ -510,7 +438,7 @@ def parse_tables(doc, details, record_data, object_type):
                                 else:
                                     source_text = category_name
                                 
-                                category_source = find_source_link(row.cells[title_idx], source_text)
+                                category_source = find_source_link(details, row.cells[title_idx], source_text)
                             
                                 #update 'current position'
                                 current_position = f"{category_name} - {current_position}"
@@ -707,7 +635,7 @@ def parse_tables(doc, details, record_data, object_type):
                             # add state code, source, and defined terms to a dictionary; append to our definitions
                             temp_defn_dict = { 
                                 "state_code": state_code.strip(),
-                                "source": find_source_link(statutes_cell, state_code),
+                                "source": find_source_link(details, statutes_cell, state_code),
                                 "defined_terms": [t.strip() for t in terms.split(',')]
                             }
 
@@ -1159,11 +1087,15 @@ if __name__ == "__main__":
     details['tmp_audit_log'] = os.path.join(details['out_dir'], f'tmp_{details['state'].lower().replace(' ', '_')}_audit-log.txt')
     if os.path.exists(details['tmp_audit_log']):
         os.remove(details['tmp_audit_log'])
+
     details["audit_log"] = os.path.join(details['out_dir'], f'{details['state'].lower().replace(' ', '_')}_audit-log.txt')
     if os.path.exists(details['audit_log']):
         os.remove(details['audit_log'])
 
-    details['bad_link_log'] = os.path.join(details['out_dir'], f'tmp_{details['state'].lower().replace(' ', '_')}_bad-link-log.csv')
+
+    details['bad_link_log'] = os.path.join(details['out_dir'], f'{details['state'].lower().replace(' ', '_')}_bad-link-log.csv')
+    if os.path.exists(details['bad_link_log']):
+        os.remove(details['bad_link_log'])
 
     # make sure boolean values are set
     for term in ["category", "titleContent"]:            

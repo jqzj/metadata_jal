@@ -284,46 +284,48 @@
 
                 <!-- Start by checking if there are definitions. Note that section headings will change if we are working with titleContent vs. article -->
                 <xsl:if test="definitions">
-                    <b>Definitions related to 
-                    <xsl:choose>
+                    <b>Definitions for 
+                      <xsl:choose>
+                        <!-- If we're in a titleContent context -->
                         <xsl:when test="self::titleContent">
-                            <xsl:value-of select="$titleNumber"/>
-                            <xsl:text> (</xsl:text>
-                            <xsl:copy-of select="$titleLink"/>
-                            <xsl:text>)</xsl:text>
+                          <xsl:value-of select="$titleNumber"/>
+                          <xsl:text> (</xsl:text>
+                          <xsl:copy-of select="$titleLink"/>
+                          <xsl:text>)</xsl:text>
                         </xsl:when>
 
+                        <!-- Otherwise, use the most specific level available -->
                         <xsl:otherwise>
-                            <xsl:value-of select="$articleNumber"/>
-                            <xsl:text> (</xsl:text>
-                            <xsl:copy-of select="$articleLink"/>
-                            <xsl:text>)</xsl:text>
-
-                            <xsl:if test="part">
-                                <xsl:text>, </xsl:text>
-                                <xsl:choose>
-                                    <xsl:when test="part/altName">
-                                        <xsl:value-of select="$alt_partNumber"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$partNumber"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text> (</xsl:text>
-                                <xsl:copy-of select="$partLink"/>
-                                <xsl:text>)</xsl:text>
-
-                                <xsl:if test="part/subPart">
-                                    <xsl:text>, </xsl:text>
-                                    <xsl:value-of select="$subPartNumber"/>
-                                    <xsl:text> (</xsl:text>
-                                    <xsl:copy-of select="$subPartLink"/>
-                                    <xsl:text>)</xsl:text>
-                                </xsl:if>
-                            </xsl:if>
+                          <xsl:choose>
+                            <xsl:when test="part/subPart">
+                              <xsl:value-of select="$subPartNumber"/>
+                              <xsl:text> (</xsl:text>
+                              <xsl:copy-of select="$subPartLink"/>
+                              <xsl:text>)</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="part">
+                              <xsl:choose>
+                                <xsl:when test="part/altName">
+                                  <xsl:value-of select="$alt_partNumber"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                  <xsl:value-of select="$partNumber"/>
+                                </xsl:otherwise>
+                              </xsl:choose>
+                              <xsl:text> (</xsl:text>
+                              <xsl:copy-of select="$partLink"/>
+                              <xsl:text>)</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="$articleNumber"/>
+                              <xsl:text> (</xsl:text>
+                              <xsl:copy-of select="$articleLink"/>
+                              <xsl:text>)</xsl:text>
+                            </xsl:otherwise>
+                          </xsl:choose>
                         </xsl:otherwise>
-                    </xsl:choose>
-                    </b>   
+                      </xsl:choose>
+                    </b>  
 
                     <!-- Now present each statute and associated defined terms -->
                     <ul>
@@ -348,46 +350,48 @@
 
                 <!-- Now check if there are requirements. -->
                 <xsl:if test="requirements">
-                    <b>Requirements related to 
-                    <xsl:choose>
+                    <b>Requirements for 
+                      <xsl:choose>
+                        <!-- If we're in a titleContent context -->
                         <xsl:when test="self::titleContent">
-                            <xsl:value-of select="$titleNumber"/>
-                            <xsl:text> (</xsl:text>
-                            <xsl:copy-of select="$titleLink"/>
-                            <xsl:text>)</xsl:text>
+                          <xsl:value-of select="$titleNumber"/>
+                          <xsl:text> (</xsl:text>
+                          <xsl:copy-of select="$titleLink"/>
+                          <xsl:text>)</xsl:text>
                         </xsl:when>
 
+                        <!-- Otherwise, pick the most specific granularity -->
                         <xsl:otherwise>
-                            <xsl:value-of select="$articleNumber"/>
-                            <xsl:text> (</xsl:text>
-                            <xsl:copy-of select="$articleLink"/>
-                            <xsl:text>)</xsl:text>
-
-                            <xsl:if test="part">
-                                <xsl:text>, </xsl:text>
-                                <xsl:choose>
-                                    <xsl:when test="part/altName">
-                                        <xsl:value-of select="$alt_partNumber"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$partNumber"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text> (</xsl:text>
-                                <xsl:copy-of select="$partLink"/>
-                                <xsl:text>)</xsl:text>
-
-                                <xsl:if test="part/subPart">
-                                    <xsl:text>, </xsl:text>
-                                    <xsl:value-of select="$subPartNumber"/>
-                                    <xsl:text> (</xsl:text>
-                                    <xsl:copy-of select="$subPartLink"/>
-                                    <xsl:text>)</xsl:text>
-                                </xsl:if>
-                            </xsl:if>
+                          <xsl:choose>
+                            <xsl:when test="part/subPart">
+                              <xsl:value-of select="$subPartNumber"/>
+                              <xsl:text> (</xsl:text>
+                              <xsl:copy-of select="$subPartLink"/>
+                              <xsl:text>)</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="part">
+                              <xsl:choose>
+                                <xsl:when test="part/altName">
+                                  <xsl:value-of select="$alt_partNumber"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                  <xsl:value-of select="$partNumber"/>
+                                </xsl:otherwise>
+                              </xsl:choose>
+                              <xsl:text> (</xsl:text>
+                              <xsl:copy-of select="$partLink"/>
+                              <xsl:text>)</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="$articleNumber"/>
+                              <xsl:text> (</xsl:text>
+                              <xsl:copy-of select="$articleLink"/>
+                              <xsl:text>)</xsl:text>
+                            </xsl:otherwise>
+                          </xsl:choose>
                         </xsl:otherwise>
-                    </xsl:choose>
-                    </b>  
+                      </xsl:choose>
+                    </b>
 
                     <!-- For each statute, grab label, state code, description.-->
                     <ul>
@@ -442,91 +446,6 @@
                     </xsl:for-each>
                     </ul>
                 </xsl:if>
-
-                <!-- Finally, we may (rarely) have 'regulations' -->
-                <xsl:if test="regulations">
-                    <b>Regulations regarding 
-                    <xsl:choose>
-                        <xsl:when test="self::titleContent">
-                            <xsl:value-of select="$titleNumber"/>
-                            <xsl:text> (</xsl:text>
-                            <xsl:copy-of select="$titleLink"/>
-                            <xsl:text>)</xsl:text>
-                        </xsl:when>
-
-                        <xsl:otherwise>
-                            <xsl:value-of select="$articleNumber"/>
-                            <xsl:text> (</xsl:text>
-                            <xsl:copy-of select="$articleLink"/>
-                            <xsl:text>)</xsl:text>
-
-                            <xsl:if test="part">
-                                <xsl:text>, </xsl:text>
-                                <xsl:choose>
-                                    <xsl:when test="part/altName">
-                                        <xsl:value-of select="$alt_partNumber"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$partNumber"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text> (</xsl:text>
-                                <xsl:copy-of select="$partLink"/>
-                                <xsl:text>)</xsl:text>
-
-                                <xsl:if test="part/subPart">
-                                    <xsl:text>, </xsl:text>
-                                    <xsl:value-of select="$subPartNumber"/>
-                                    <xsl:text> (</xsl:text>
-                                    <xsl:copy-of select="$subPartLink"/>
-                                    <xsl:text>)</xsl:text>
-                                </xsl:if>
-                            </xsl:if>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    </b>  
-
-                    <ul>
-                    <xsl:for-each select="regulations/statute">
-                        <li class="doublespace">
-                            <b><xsl:value-of select="label"/></b>
-                            <xsl:if test="description"> 
-                                <xsl:text> – </xsl:text>
-                                <xsl:value-of select="description"/>
-                            </xsl:if>
-                            <xsl:text> (</xsl:text>
-                            <xsl:element name="a">
-                                <xsl:attribute name="href">
-                                    <xsl:value-of select="source"/>
-                                </xsl:attribute>
-                                <xsl:value-of select="stateCode"/>
-                            </xsl:element>
-                            <xsl:text>)</xsl:text>
-                            <ul>
-                                <!-- Who Law Applies To -->
-                                <li>
-                                    <b>Who Law Applies To:</b>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:for-each select="appliesTo/entity">
-                                        <xsl:value-of select="."/>
-                                        <xsl:if test="position() != last()">; </xsl:if>
-                                    </xsl:for-each>
-                                </li>
-                                <!-- Tags -->
-                                <li>
-                                    <b>Tag(s):</b>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:for-each select="terms/term">
-                                        <xsl:value-of select="."/>
-                                        <xsl:if test="position() != last()">; </xsl:if>
-                                    </xsl:for-each>
-                                </li>
-                            </ul>
-                        </li>
-                    </xsl:for-each>
-                    </ul>
-                </xsl:if>
-
                 </td>
             </tr>
         </xsl:for-each>
