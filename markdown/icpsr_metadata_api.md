@@ -1,18 +1,36 @@
-# ICPSR Metadata API Documentation
+# ICPSR Metadata Export API
 
-## Under Development: A New API to Export Metadata!
+ICPSR has developed a new application programming interface (API) to help community members 
 
-ICPSR is developing a new application programming interface (API) so that community members can perform bulk exports of metadata records. This new API will:
+  - Search for ICPSR data collections by specific metadata fields (e.g., study identifier, subject terms, geographic coverage area, original release date, etc.)
+  - Export metadata records for those data collections in various standardized formats (e.g., DCAT-US, MARCXML, Dublin Core).
 
-  - Simplify and standardize the process of accessing metadata records.
-  - Allow ICPSR to provide metadata in a broader range of standards and formats.
+This new Object Export API will furthermore help ICPSR to:
+
+  - Simplify and standardize the process of creating metadata records.
   - Support more complex queries so that users can find the metadata records that best meet their needs.
+  - Provide metadata records in a broader range of standards and formats.
 
-## ICPSR Metadata API Mappings
+## Getting Started
 
-Upon its release, the ICPSR Metadata API will produce records that conform to the following standards (with more to come in the future): 
+Community members interested in using the new API should consult the [ICPSR Object-Export API User Guide](https://docs.google.com/document/d/1fkr7SBnpl9hX_xClajnpNxwC67JCEUvPhD_VQjKJ_SM/edit?usp=sharing). 
 
-  - [DCAT-US](https://resources.data.gov/resources/dcat-us/): a U.S. government extension of the Data Catalog Vocabulary (DCAT), designed to improve the discoverability and interoperability of federal open data. It provides a standardized way to describe datasets, data services, and distributions using RDF-based metadata, ensuring consistency across data catalogs like data.gov. This standard aligns with international best practices while incorporating specific requirements for U.S. government data publishing. _Please note that ICPSR has produced an extension of the DCAT-US standard, which is available [here](assets/dcat-us.json)._
+This guide provides thorough instructions to use the API; topics include:
+
+  - Acquiring a temporary University of Michigan account (for non-UM affiliations).
+  - Acquiring API credentials.
+  - Crafting and submitting queries for metadata records.
+  - Downloading and interpreting metadata records.
+
+Questions or suggestions regarding the API should be submitted to ICPSR-help [at] umich.edu.
+
+## API Metadata Mappings
+
+Metadata records produced by the ICPSR Object Export API conform to the following standards (with more to come in the future): 
+
+  - [DCAT-US](https://resources.data.gov/resources/dcat-us/): a U.S. government extension of the Data Catalog Vocabulary (DCAT), designed to improve the discoverability and interoperability of federal open data. It provides a standardized way to describe datasets, data services, and distributions using RDF-based metadata, ensuring consistency across data catalogs like data.gov. This standard aligns with international best practices while incorporating specific requirements for U.S. government data publishing. 
+
+    > _Please note that ICPSR's DCAT-US metadata exports conform to [this local extension of the DCAT-US standard](assets/dcat-us.json)._
 
   - [MARCXML](https://www.loc.gov/standards/marcxml/): an XML-based representation of the MARC (Machine-Readable Cataloging) standard, developed by the Library of Congress for bibliographic and authority data. It preserves the structure and semantics of MARC records while enabling interoperability with modern XML-based systems. This format allows libraries and archives to exchange, transform, and integrate catalog data more easily with digital repositories and web technologies.
 
