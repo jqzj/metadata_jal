@@ -63,8 +63,8 @@
        <xs:element ref="name"/>
        <xs:element ref="source"/>
        <xs:element ref="officesAssociated"/>
-       <xs:choice>        
-        <xs:element maxOccurs="unbounded" ref="article"/>
+       <xs:choice maxOccurs="unbounded">        
+        <xs:element ref="article"/>
         <xs:element ref="titleContent"/>
        </xs:choice>
       </xs:sequence>
@@ -92,16 +92,10 @@
         <xs:choice minOccurs="1" maxOccurs="1">
           <xs:sequence>
             <xs:element ref="definitions" minOccurs = "1"/>
-            <xs:choice>
-              <xs:element ref="requirements" minOccurs = "0"/>
-              <xs:element ref="regulations" minOccurs = "0"/>
-            </xs:choice>
+            <xs:element ref="requirements" minOccurs = "0"/>
           </xs:sequence>
           <xs:sequence>
-            <xs:choice>
-              <xs:element ref="requirements" minOccurs = "1"/>
-              <xs:element ref="regulations" minOccurs = "1"/>
-            </xs:choice>
+            <xs:element ref="requirements" minOccurs = "1"/>
           </xs:sequence>
          
         </xs:choice>
@@ -117,16 +111,10 @@
         <xs:choice minOccurs="1" maxOccurs="1">
           <xs:sequence>
             <xs:element ref="definitions" minOccurs = "1"/>
-            <xs:choice>
-              <xs:element ref="requirements" minOccurs = "0"/>
-              <xs:element ref="regulations" minOccurs = "0"/>
-            </xs:choice>
+            <xs:element ref="requirements" minOccurs = "0"/>
           </xs:sequence>
           <xs:sequence>
-            <xs:choice>
-              <xs:element ref="requirements" minOccurs = "1"/>
-              <xs:element ref="regulations" minOccurs = "1"/>
-            </xs:choice>
+            <xs:element ref="requirements" minOccurs = "1"/>
           </xs:sequence>
         </xs:choice>
       </xs:sequence>
@@ -182,14 +170,6 @@
   </xs:element>
   
   <xs:element name="requirements">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="statute"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  
-  <xs:element name="regulations">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="statute"/>
